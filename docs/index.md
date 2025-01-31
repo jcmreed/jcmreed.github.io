@@ -12,5 +12,10 @@ Access my team's webpage: [Team 201's Webpage](https://asu-egr314-2025-s-201.git
 ## __My Assignments__
 Assignment | Link
 -----|------------
-Block Diagram   | [link](https://jcmreed.github.io/Block%20Diagram/)
-Assignment #2 | link
+JC   | Fun
+Team | Great
+
+### Test Subheading
+1. Step #1
+1. Step #2
+1. Step #3
