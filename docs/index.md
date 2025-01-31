@@ -5,20 +5,12 @@ tags:
 - tag2
 ---
 
-## Hello! My name is JC Reed. 
+## __Welcome to the landing page for direct access to all of JC Reed's indiviual assignments for EGR314.__
 
-## Test List:
-* List item #1
-* List item #2
-* List item #3
+Access my team's webpage: [Team 201's Webpage](https://asu-egr314-2025-s-201.github.io/)
 
-## Test Table
-Name | Description
+## __My Assignments__
+Assignment | Link
 -----|------------
-JC   | Fun
-Team | Great
-
-### Test Subheading
-1. Step #1
-1. Step #2
-1. Step #3
+Block Diagram   | [link](https://jcmreed.github.io/Block%20Diagram/)
+Assignment #2 | link
