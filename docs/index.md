@@ -13,4 +13,4 @@ Access my team's webpage: [Team 201's Webpage](https://asu-egr314-2025-s-201.git
 Assignment | Link
 -----|------------
 Block Diagram   | [link](https://jcmreed.github.io/Block%20Diagram/)
-Assignment #2 | link
+Component Selection | [link](https://jcmreed.github.io/Component%20Selection/)
