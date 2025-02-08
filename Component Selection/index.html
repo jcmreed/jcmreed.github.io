@@ -91,7 +91,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#table-1-selecting-a-pushbutton" class="md-skip">
+        <a href="#my-role-in-the-project" class="md-skip">
           Skip to content
         </a>
       
@@ -384,9 +384,70 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#my-role-in-the-project" class="md-nav__link">
+    My Role in the Project
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#table-1-selecting-a-pushbutton" class="md-nav__link">
     Table 1: Selecting a Pushbutton
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-2-selecting-an-oled-screen" class="md-nav__link">
+    Table 2: Selecting an OLED Screen
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-3-selecting-a-voltage-regulator" class="md-nav__link">
+    Table 3: Selecting a Voltage Regulator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-4-selecting-a-power-supply" class="md-nav__link">
+    Table 4: Selecting a Power Supply
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#microcontroller-used-esp32-s3-wroom-1-n4" class="md-nav__link">
+    Microcontroller Used: ESP32-S3-WROOM-1-N4
+  </a>
+  
+    <nav class="md-nav" aria-label="Microcontroller Used: ESP32-S3-WROOM-1-N4">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pin-layout" class="md-nav__link">
+    Pin Layout
+  </a>
+  
+    <nav class="md-nav" aria-label="Pin Layout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pin-allocation" class="md-nav__link">
+    Pin Allocation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -423,9 +484,70 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#my-role-in-the-project" class="md-nav__link">
+    My Role in the Project
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#table-1-selecting-a-pushbutton" class="md-nav__link">
     Table 1: Selecting a Pushbutton
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-2-selecting-an-oled-screen" class="md-nav__link">
+    Table 2: Selecting an OLED Screen
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-3-selecting-a-voltage-regulator" class="md-nav__link">
+    Table 3: Selecting a Voltage Regulator
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-4-selecting-a-power-supply" class="md-nav__link">
+    Table 4: Selecting a Power Supply
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#microcontroller-used-esp32-s3-wroom-1-n4" class="md-nav__link">
+    Microcontroller Used: ESP32-S3-WROOM-1-N4
+  </a>
+  
+    <nav class="md-nav" aria-label="Microcontroller Used: ESP32-S3-WROOM-1-N4">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pin-layout" class="md-nav__link">
+    Pin Layout
+  </a>
+  
+    <nav class="md-nav" aria-label="Pin Layout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pin-allocation" class="md-nav__link">
+    Pin Allocation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -454,6 +576,8 @@
 
   <h1>Component Selection</h1>
 
+<h2 id="my-role-in-the-project"><strong>My Role in the Project</strong></h2>
+<p>My role in this project is to provide exhibit-goers with a Human Machine Interface (HMI) that allows them to take control of the display's actuator. Please refer to <a href="https://asu-egr314-2025-s-201.github.io/02-Ideation%20and%20Concept%20Generation/">my team's webpage</a> for a more detailed descripton of the product. My goal is to allow the user to navigate through the interface with three seperate buttons for movement and selection. Inputs should be reflected on the interface, which is done through a small OLED LCD display. In regards to my communication responsibilities, I am responsible for sending UART commands to my team members in charge of actuators and internet as the stepper motor should move on user command and display information on a mobile device respectively.</p>
 <h2 id="table-1-selecting-a-pushbutton"><strong>Table 1: Selecting a Pushbutton</strong></h2>
 <table>
 <thead>
@@ -465,24 +589,215 @@
 </thead>
 <tbody>
 <tr>
-<td><a class="glightbox" href="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/316/PTS636-Gull-Wing.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/316/PTS636-Gull-Wing.jpg" alt="Button #1" width="200" height="150"></a> <br> Option #1: PTS636SM43SMTR LFS Surface Mount Push Button <br> <a href="https://www.digikey.com/en/products/detail/c-k/PTS636SM43SMTR-LFS/10071723">link to product</a></td>
+<td><a class="glightbox" href="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/316/PTS636-Gull-Wing.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/316/PTS636-Gull-Wing.jpg" alt="Button #1" width="200" height="150"></a> <br> Option #1: PTS636SM43SMTR LFS Surface Mount Push Button ($0.23)<br> <a href="https://www.digikey.com/en/products/detail/c-k/PTS636SM43SMTR-LFS/10071723">link to product</a></td>
 <td>- Good PCB Contact <br> - Tactile <br> - Inexpensive</td>
 <td>- Long Shipping Time <br> - Small for User Interactivity</td>
 </tr>
 <tr>
-<td><a class="glightbox" href="https://m.media-amazon.com/images/I/71zbJf55BXL._AC_SL1500_.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://m.media-amazon.com/images/I/71zbJf55BXL._AC_SL1500_.jpg" alt="Button #2" width="200" height="150"></a> <br> Option #2: Gikfun Tactile Surface Mount Push Button <br> <a href="https://www.amazon.com/Gikfun-12x12x7-3-Tactile-Momentary-Arduino/dp/B01E38OS7K">link to product</a></td>
+<td><a class="glightbox" href="https://m.media-amazon.com/images/I/71zbJf55BXL._AC_SL1500_.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://m.media-amazon.com/images/I/71zbJf55BXL._AC_SL1500_.jpg" alt="Button #2" width="200" height="150"></a> <br> Option #2: Gikfun Tactile Surface Mount Push Button ($8.68) <br> <a href="https://www.amazon.com/Gikfun-12x12x7-3-Tactile-Momentary-Arduino/dp/B01E38OS7K">link to product</a></td>
 <td>- Fun and Colorful for Exhibit <br> - Tactile <br> - Fast Shipping</td>
 <td>- Expensive <br> - Comes in Bulk <br> - Must Reorientate Pins for PCB</td>
 </tr>
 <tr>
-<td><a class="glightbox" href="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/516/MFG_K8.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/516/MFG_K8.jpg" alt="Button #3" width="200" height="150"></a> <br> Option #3: K8WH41G LFS Tactile Surface Mount Push Button w/ LED <br> <a href="https://www.digikey.com/en/products/detail/c-k/K8WH41G-LFS/4176636?s=N4IgTCBcDaINIA4DqAJALARgOIgLoF8g">link to product</a></td>
+<td><a class="glightbox" href="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/516/MFG_K8.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/516/MFG_K8.jpg" alt="Button #3" width="200" height="150"></a> <br> Option #3: K8WH41G LFS Tactile Surface Mount Push Button w/ LED ($6.45) <br> <a href="https://www.digikey.com/en/products/detail/c-k/K8WH41G-LFS/4176636?s=N4IgTCBcDaINIA4DqAJALARgOIgLoF8g">link to product</a></td>
 <td>- LED for Exhibit Experience <br> - Tactile</td>
 <td>- Long Shipping Time <br> - Extra Pins for LED Control <br> - Must Buy Other Buttons for Different LED Color</td>
 </tr>
 </tbody>
 </table>
 <p><strong>Choice: Option #2: Gikfun Tactile Surface Mount Push Button</strong> <br>
-<strong>Rationale:</strong> This option was selected due to the extreme amount of customizability available. Considering the team's STEM exhibit works closely with color recognition, it was important to select something that works well within the theme. Also, these buttons funtion to provide excellent tactile feedback while offering a level of interactivity other options cannot. While it's true that this option was the most expensive, it remains in the range of budget. </p>
+<strong>Rationale:</strong> This option was selected due to the extreme amount of customizability available. Considering the team's STEM exhibit works closely with color recognition, it was important to select something that works well within the theme. Also, these buttons funtion to provide excellent tactile feedback while offering a level of interactivity other options cannot. While it's true that this option was the most expensive, it remains in the range of budget.</p>
+<h2 id="table-2-selecting-an-oled-screen"><strong>Table 2: Selecting an OLED Screen</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Potential Solutions</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="glightbox" href="https://m.media-amazon.com/images/I/41qBPSM9XqL._AC_SY450_.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://m.media-amazon.com/images/I/41qBPSM9XqL._AC_SY450_.jpg" alt="OLED #1" width="200" height="150"></a> <br> Option #1: Songhe 0.96inch OLED LCD Display Board (~$2.00 per board)<br> <a href="https://www.amazon.com/Songhe-0-96-inch-I2C-Raspberry/dp/B085WCRS7C/">link to product</a></td>
+<td>- I2C Serial Communication <br> - 5 Pack <br> - Provided from ASU</td>
+<td>- No Price Listed <br> - Small Resolution <br> - Might be Difficult for Users to See</td>
+</tr>
+<tr>
+<td><a class="glightbox" href="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/5481/MFG_WEA012864DBPP3N00003.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/5481/MFG_WEA012864DBPP3N00003.jpg" alt="OLED #2" width="200" height="150"></a> <br> Option #2: Winstar Graphic LCD Display Module ($7.02) <br> <a href="https://www.digikey.com/en/products/detail/winstar-display/WEA012864DBPP3N00003/20533257?s=N4IgTCBcDaIOoFECCAGAjGAHANgCwBEAhABWIGYA5FalMkAXQF8g">link to product</a></td>
+<td>- I2C Serial Communication <br> - Easy Communication w/ ESP32 <br></td>
+<td>- Small Resolution <br> - Not Provided from ASU <br> - Might be Difficult for Users to See</td>
+</tr>
+<tr>
+<td><a class="glightbox" href="https://m.media-amazon.com/images/I/61XoEybK7YL._AC_SL1010_.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://m.media-amazon.com/images/I/61XoEybK7YL._AC_SL1010_.jpg" alt="OLED #3" width="200" height="150"></a> <br> Option #3: HiLetgo 0.91inch I2C Serial OLED LCD Display ($6.49) <br> <a href="https://www.amazon.com/HiLetgo-Serial-Display-SSD1306-Arduino/dp/B01N0KIVUX/ref=sr_1_1?crid=U6CMNNUE3S1R&amp;dib=eyJ2IjoiMSJ9.AJb-I67N7TP6meO9EMPF6J1ZkDYELWiav4UO60YOqPavIi9KIwhvuc2U34QCZpVdz2eeWTXB255DvI-X8_APnQ.CHhMrB__sr00Pyb42g_DVkgdrkJmFBLo_I_o6ejjz9s&amp;dib_tag=se&amp;keywords=HiLetgo+i2c+91+inch+display&amp;qid=1738957024&amp;sprefix=hiletgo+i2c+91+inch+displa%2Caps%2C389&amp;sr=8-1">link to product</a></td>
+<td>- I2C Serial Communication <br> - Rectangular Display <br> - Fast Shipping</td>
+<td>- Small Resolution <br> - Not Provided from ASU</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Choice: Option #1: Songhe 0.96inch OLED LCD Display Board</strong> <br>
+<strong>Rationale:</strong> Overall, all solutions in this table were very similar and varied only by price and display size. The reason option #1 was selected was due to the fact that ASU provides the screen, which saves money and shipping time. Familiarity with this device will be gained through in-class labs as well.</p>
+<h2 id="table-3-selecting-a-voltage-regulator"><strong>Table 3: Selecting a Voltage Regulator</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Potential Solutions</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="glightbox" href="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/4895/31%7ESOT223%7EE%2CG%2CH%7E4.JPG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/4895/31%7ESOT223%7EE%2CG%2CH%7E4.JPG" alt="Regulator #1" width="200" height="150"></a> <br> Option #1: AP2114H-3.3TRG1 Linear Voltage Regulator ($0.61) <br> <a href="https://www.digikey.com/en/products/detail/diodes-incorporated/AP2114H-3-3TRG1/4470756?s=N4IgTCBcDaIIIAUwEZkBYASBaAzAOhwBUAlAcWRAF0BfIA">link to product</a></td>
+<td>- Meets Requirements <br> - Inexpensive <br> - Compact Design</td>
+<td>- Requires External Components <br> - 6V Input <br> - Linear, not Adjustable</td>
+</tr>
+<tr>
+<td><a class="glightbox" href="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/2802/497%7E8SOIC-3.9%7E%7E8.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/2802/497%7E8SOIC-3.9%7E%7E8.jpg" alt="Regulator #2" width="200" height="150"></a> <br> Option #2: L6981C33DR - Buck Switching Regulator ($2.80) <br> <a href="https://www.digikey.com/en/products/detail/stmicroelectronics/L6981C33DR/16841475">link to product</a></td>
+<td>- High Efficiency <br> - Adjustable and Fixed Capabilities <br> - Compact Design</td>
+<td>- Requires External Components <br> - Expensive for Regulator <br></td>
+</tr>
+<tr>
+<td><a class="glightbox" href="https://mm.digikey.com/Volume0/opasdata/d220001/derivates/6/003/213/095/600%7ESOT23-5%7E%7E5_web%28640x640%29.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://mm.digikey.com/Volume0/opasdata/d220001/derivates/6/003/213/095/600%7ESOT23-5%7E%7E5_web%28640x640%29.jpg" alt="Regulator #3" width="200" height="150"></a> <br> Option #3: SC189ZSKTRT - 3.3V Buck Switching Regulator ($1.89) <br> <a href="https://www.digikey.com/en/products/detail/semtech-corporation/SC189ZSKTRT/2182360">link to product</a></td>
+<td>- High Efficiency <br> - Inexpensive <br> - Compact Design</td>
+<td>- Requires External Components <br> - Soldering Might be Difficult <br></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Choice: Option #3: SC189ZSKTRT - 3.3V Buck Switching Regulator</strong> <br>
+<strong>Rationale:</strong> This solution was selected as it meets all project requirements with high efficiency as well. While it does require extra components, the datasheet helps identify a proper setup for good results. This compact regulator is also similar to the through-hole regulator used in the classroom labs. Heat dissipation should also not be an issue with the 9V power supply. </p>
+<h2 id="table-4-selecting-a-power-supply"><strong>Table 4: Selecting a Power Supply</strong></h2>
+<table>
+<thead>
+<tr>
+<th>Potential Solutions</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="glightbox" href="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/4838/WR9HD1333CCP-F%28R6B%29.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/4838/WR9HD1333CCP-F%28R6B%29.jpg" alt="Power Supply #1" width="200" height="150"></a> <br> Option #1: WR9HD1333CCP-F(R6B) - 9V 12 W AC/DC External Wall Mount ($3.94) <br> <a href="https://www.digikey.com/en/products/detail/globtek-inc/WR9HD1333CCP-F-R6B/13245472">link to product</a></td>
+<td>- Barrel Jack Output <br> - Inexpensive <br></td>
+<td>- 1.33A (Sufficient for ESP32, Might Need More Room for Other Peripherals) <br> - Long Shipping Time</td>
+</tr>
+<tr>
+<td><a class="glightbox" href="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/2268/MFG_WSUxxx-Series.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/2268/MFG_WSUxxx-Series.jpg" alt="Power Supply #2" width="200" height="150"></a> <br> Option #2: WSU090-2000-13 - 9V 18 W AC/DC External Wall Mount ($12.15)  <br> <a href="https://www.digikey.com/en/products/detail/triad-magnetics/WSU090-2000-13/6600197">link to product</a></td>
+<td>- Barrel Jack Output <br> - 2A Supply <br></td>
+<td>- Expensive <br> - Long Shipping Time <br> - Bulky Design</td>
+</tr>
+<tr>
+<td><a class="glightbox" href="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/19/MFG_VEL12-US_dist.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/19/MFG_VEL12-US_dist.jpg" alt="Power Supply #3" width="200" height="150"></a> <br> Option #3: VEL12US090-US-JA - 9V 12 W AC/DC External Wall Mount ($12.17) <br> <a href="https://www.digikey.com/en/products/detail/xp-power/VEL12US090-US-JA/5726832">link to product</a></td>
+<td>- Barrel Jack Output <br> - Slim Design <br></td>
+<td>- Expensive <br> - Long Shipping Time <br> - 1.28A Supply</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Choice: Option #1: WR9HD1333CCP-F(R6B) - 9V 12 W AC/DC External Wall Mount</strong> <br>
+<strong>Rationale:</strong> This wall supply was selected because it was the cheapest out of all three choices and implements very well into the project specifications. While it is true that only 1.33A are supplied, this is still acceptable as the ESP32's maximum current draw is within the range and leaves room for other peaks across the board.</p>
+<h2 id="microcontroller-used-esp32-s3-wroom-1-n4"><strong>Microcontroller Used: ESP32-S3-WROOM-1-N4</strong></h2>
+<table>
+<thead>
+<tr>
+<th>ESP Info</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>S3-WROOM-1-N4</td>
+</tr>
+<tr>
+<td>Product Page URL</td>
+<td><a href="https://www.espressif.com/en/products/modules">link</a></td>
+</tr>
+<tr>
+<td>ESP32-S3-WROOM-1-N4 Datasheet URL</td>
+<td><a href="https://www.espressif.com/sites/default/files/documentation/esp32-s3-wroom-1_wroom-1u_datasheet_en.pdf">link</a></td>
+</tr>
+<tr>
+<td>ESP32 S3 Datasheet URL</td>
+<td><a href="https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf">link</a></td>
+</tr>
+<tr>
+<td>ESP32 S3 Technical Reference Manual URL</td>
+<td><a href="https://www.espressif.com/sites/default/files/documentation/esp32_technical_reference_manual_en.pdf">link</a></td>
+</tr>
+<tr>
+<td>Vendor link</td>
+<td><a href="https://www.digikey.com/en/products/detail/espressif-systems/ESP32-S3-WROOM-1-N4/16162639">link</a></td>
+</tr>
+<tr>
+<td>Code Examples</td>
+<td><a href="https://randomnerdtutorials.com/esp32-esp8266-i2c-lcd-arduino-ide/">Arduino Example w/ LCD</a> <br> <a href="https://stackoverflow.com/questions/79141161/esp32-s3-geek-lcd-screen-programming">StackExchange Forum</a></td>
+</tr>
+<tr>
+<td>External Resources URL(s)</td>
+<td><a href="https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/get-started/index.html">Expressif Tutorial</a> <br> <a href="https://www.youtube.com/watch?v=UooqZeFWRoE">YouTube Tutorial (Good w/ BLE)</a></td>
+</tr>
+<tr>
+<td>Unit cost</td>
+<td>$2.95</td>
+</tr>
+<tr>
+<td>Absolute Maximum Current for entire IC</td>
+<td>1500mA</td>
+</tr>
+<tr>
+<td>Supply Voltage Range</td>
+<td>3.0V - 3.6V (3.3V is Typical)</td>
+</tr>
+<tr>
+<td>Absolute Maximum current <br> (for VDD3P3)</td>
+<td>500mA</td>
+</tr>
+<tr>
+<td>Maximum GPIO current <br> (per pin)</td>
+<td>40mA</td>
+</tr>
+<tr>
+<td>Supports External Interrupts?</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Required Programming Hardware, Cost, URL</td>
+<td><a href="https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32s3/schematic-checklist.html#">Schematic Checklist</a> <br> <a href="https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32s3/pcb-layout-design.html">PCB Layout Design</a> <br> <a href="https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32s3/hardware-development.html">Hardware Development</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="pin-layout"><strong>Pin Layout</strong></h3>
+<p><a class="glightbox" href="https://wiki.autosportlabs.com/images/a/aa/Microcontroller_pin_layout.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="https://wiki.autosportlabs.com/images/a/aa/Microcontroller_pin_layout.png" alt="Pin Layout" width="500" height="750"></a></p>
+<h4 id="pin-allocation"><strong>Pin Allocation</strong></h4>
+<table>
+<thead>
+<tr>
+<th>Peripheral</th>
+<th>Pin Assignment (Name, Number)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Power</td>
+<td>3V3, 2</td>
+</tr>
+<tr>
+<td>Ground</td>
+<td>GND, 1 <br> GND, 40</td>
+</tr>
+<tr>
+<td>UART</td>
+<td>RXD0, 36 <br> TXD0, 37</td>
+</tr>
+<tr>
+<td>I2C</td>
+<td>IO9, 17 (SCL) <br> IO8, 12 (SDA)</td>
+</tr>
+<tr>
+<td>GPIO</td>
+<td>IO4, 4 <br> IO5, 5 <br> IO6, 6</td>
+</tr>
+</tbody>
+</table>
 
 
 
