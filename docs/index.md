@@ -14,3 +14,4 @@ Assignment | Link
 -----|------------
 Block Diagram   | [link](https://jcmreed.github.io/Block%20Diagram/)
 Component Selection | [link](https://jcmreed.github.io/Component%20Selection/)
+Schematic Design | [link](https://jcmreed.github.io/Schematic%20Design/)
