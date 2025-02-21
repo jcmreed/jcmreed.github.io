@@ -32,8 +32,8 @@ Potential Solutions | Pros | Cons
 <img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/2802/497%7E8SOIC-3.9%7E%7E8.jpg" alt="Regulator #2" width="200" height="150"> <br> Option #2: L6981C33DR - Buck Switching Regulator ($2.80) <br> [link to product](https://www.digikey.com/en/products/detail/stmicroelectronics/L6981C33DR/16841475) | - High Efficiency <br> - Adjustable and Fixed Capabilities <br> - Compact Design | - Requires External Components <br> - Expensive for Regulator <br>
 <img src="https://mm.digikey.com/Volume0/opasdata/d220001/derivates/6/003/213/095/600%7ESOT23-5%7E%7E5_web%28640x640%29.jpg" alt="Regulator #3" width="200" height="150"> <br> Option #3: SC189ZSKTRT - 3.3V Buck Switching Regulator ($1.89) <br> [link to product](https://www.digikey.com/en/products/detail/semtech-corporation/SC189ZSKTRT/2182360) | - High Efficiency <br> - Inexpensive <br> - Compact Design | - Requires External Components <br> - Soldering Might be Difficult <br>
 
-__Choice: Option #3: SC189ZSKTRT - 3.3V Buck Switching Regulator__ <br>
-__Rationale:__ This solution was selected as it meets all project requirements with high efficiency as well. While it does require extra components, the datasheet helps identify a proper setup for good results. This compact regulator is also similar to the through-hole regulator used in the classroom labs. Heat dissipation should also not be an issue with the 9V power supply. 
+__Choice: Option #2: L6981C33DR - 3.3V Buck Switching Regulator__ <br>
+__Rationale:__ This solution was selected as it meets all project requirements with high efficiency as well. While it does require extra components, the datasheet helps identify a proper setup for good results. Even though this option is expensive for a regulator, this is a necessary tradeoff to take as it implements functionality better than other options. 
 
 ## __Table 4: Selecting a Power Supply__
 Potential Solutions | Pros | Cons
@@ -42,8 +42,8 @@ Potential Solutions | Pros | Cons
 <img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/2268/MFG_WSUxxx-Series.jpg" alt="Power Supply #2" width="200" height="150"> <br> Option #2: WSU090-2000-13 - 9V 18 W AC/DC External Wall Mount ($12.15)  <br> [link to product](https://www.digikey.com/en/products/detail/triad-magnetics/WSU090-2000-13/6600197) | - Barrel Jack Output <br> - 2A Supply <br> | - Expensive <br> - Long Shipping Time <br> - Bulky Design
 <img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/19/MFG_VEL12-US_dist.jpg" alt="Power Supply #3" width="200" height="150"> <br> Option #3: VEL12US090-US-JA - 9V 12 W AC/DC External Wall Mount ($12.17) <br> [link to product](https://www.digikey.com/en/products/detail/xp-power/VEL12US090-US-JA/5726832) | - Barrel Jack Output <br> - Slim Design <br> | - Expensive <br> - Long Shipping Time <br> - 1.28A Supply
 
-__Choice: Option #1: WR9HD1333CCP-F(R6B) - 9V 12 W AC/DC External Wall Mount__ <br>
-__Rationale:__ This wall supply was selected because it was the cheapest out of all three choices and implements very well into the project specifications. While it is true that only 1.33A are supplied, this is still acceptable as the ESP32's maximum current draw is within the range and leaves room for other peaks across the board.
+__Choice: Option #2: WSU090-2000-13 - 9V 18 W AC/DC External Wall Mount__ <br>
+__Rationale:__ Other options simply need to be able to supply at least 1.5A as the voltage regulator chosen above has an output of 1.5A. In order for every component to function up to their potential and eliminate risk, this wall mount was selected. While it is expensive and has a long shipping time, it works well to meet project specifications.
 
 ## __Microcontroller Used: ESP32-S3-WROOM-1-N4__
 ESP Info                                      | Answer |
@@ -71,7 +71,7 @@ Required Programming Hardware, Cost, URL    | [Schematic Checklist](https://docs
 Peripheral | Pin Assignment (Name, Number)
 -----------|----------------
 Power   | 3V3, 2
-Ground  | GND, 1 <br> GND, 40
+Ground  | GND, 1 <br> GND, 40 <br> GND, 41
 UART    | RXD0, 36 <br> TXD0, 37
-I2C     | IO9, 17 (SCL) <br> IO8, 12 (SDA)
+I2C     | IO21, 23 (SCL) <br> IO47, 24 (SDA)
 GPIO    | IO4, 4 <br> IO5, 5 <br> IO6, 6
