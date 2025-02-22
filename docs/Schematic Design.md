@@ -13,6 +13,6 @@ This functionality of this schematic satisfies user needs and product requiremen
 - [ZIP Folder](https://www.dropbox.com/scl/fi/ywo73swzin8ekzkbxb8gj/Reed-Individual-Schematic-HMI.zip?rlkey=l8j602fy5p3kgvhkq253jz905&e=1&st=rf9wqc5r&dl=0)
 
 ### __Power Budget__
-<iframe width="700" height="550" frameborder="0" scrolling="no" src="https://arizonastateu-my.sharepoint.com/personal/jmreed17_sundevils_asu_edu/_layouts/15/Doc.aspx?sourcedoc={9acb3dc5-dc87-419f-944d-ff776290fff9}&action=embedview&wdAllowInteractivity=False&Item='Power%20Budget'!A2%3AH29&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True"></iframe>
+![HMI Power Budget](static/images/PowerBudget.png)
 
 The power budget is extremely useful in providing viable component options that  safely operate the entire board. This process acts as confirmation and reassurance, while eliminating overall risks of damaging devices. 
