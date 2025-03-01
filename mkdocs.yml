@@ -44,6 +44,13 @@ draft_docs: |
   **/*_unpublished.md
   **/*_draft.md
   **/*_draft**
+
+nav: 
+ - Homepage: 'index.md'
+ - Block Diagram: 'Block Diagram.md'
+ - Component Selection: 'Component Selection.md'
+ - Schematic Design: 'Schematic Design.md'
+ - Bill of Materials: 'Bill of Materials.md'
   
 plugins:
   - search
