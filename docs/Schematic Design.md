@@ -9,8 +9,8 @@ This functionality of this schematic satisfies user needs and product requiremen
 ## ![Human Machine Interface (HMI) Schematic](static/images/HMI-Schematic.png)
 
 ### __Links for High Resolution Visibility__
-- [PDF](https://www.dropbox.com/scl/fi/i7u1h9pb6grn4z1qj37a7/IndividualSchematic-HMI-PDF.pdf?rlkey=fws5bdo1ga7gs2zt687z2xwsi&e=1&st=sag36v9d&dl=0)
-- [ZIP Folder](https://www.dropbox.com/scl/fi/ywo73swzin8ekzkbxb8gj/Reed-Individual-Schematic-HMI.zip?rlkey=l8j602fy5p3kgvhkq253jz905&e=1&st=rf9wqc5r&dl=0)
+- [PDF](https://www.dropbox.com/scl/fi/f9w1i6sscxlyywqqm48h3/IndividualSchematic-HMI-PDF.pdf?rlkey=8xb6ayctkginnebk0vwqdsbgr&st=gkm1hwtc&dl=0)
+- [ZIP Folder](https://www.dropbox.com/scl/fi/p3rfl7ne41s3101rtt6n1/Reed-Individual-Schematic-HMI.zip?rlkey=dbggk973my06dv4h1e9o1611x&st=gdkw6vrx&dl=0)
 
 ### __Power Budget__
 ![HMI Power Budget](static/images/PowerBudget.png)
