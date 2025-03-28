@@ -499,6 +499,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#address-ids" class="md-nav__link">
+    Address IDs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#team-message-protocol" class="md-nav__link">
     Team Message Protocol
   </a>
@@ -566,6 +573,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#address-ids" class="md-nav__link">
+    Address IDs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#team-message-protocol" class="md-nav__link">
     Team Message Protocol
   </a>
@@ -620,30 +634,67 @@
 
 <h3 id="my-role-in-the-daisy-chain"><strong>My role in the Daisy Chain</strong></h3>
 <p>Each team member has their own responsibility on what to send to the chain and how to handle necessary messages from the chain. Again, the subsystem I am responsible for is the Human Machine Interface (HMI). The HMI is where the exhibit user will select a path that they believe matches the color of the element. Listed below is the messaging protocol that the team is using throughout this process. For a more detailed explanation, please refer to this <a href="https://asu-egr314-2025-s-201.github.io/04-Block%20Diagram%2C%20Process%20Diagram%2C%20and%20Message%20Structure/">link.</a></p>
+<h3 id="address-ids"><strong>Address IDs</strong></h3>
+<table>
+<thead>
+<tr>
+<th>Team Member</th>
+<th>Subsystem</th>
+<th>ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JC R (myself)</td>
+<td>Human Machine Interface (HMI)</td>
+<td>H</td>
+</tr>
+<tr>
+<td>Eric M</td>
+<td>RGB Sensor</td>
+<td>S</td>
+</tr>
+<tr>
+<td>Marcus P</td>
+<td>MQTT Server</td>
+<td>M</td>
+</tr>
+<tr>
+<td>Bradley P</td>
+<td>Actuator</td>
+<td>A</td>
+</tr>
+</tbody>
+</table>
 <h3 id="team-message-protocol"><strong>Team Message Protocol</strong></h3>
 <table>
 <thead>
 <tr>
 <th>Message Type <br> byte 1-2 <br>(uint16_t)</th>
 <th>Description</th>
+<th>Data Command</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>0</td>
 <td>Status Code</td>
+<td>0 (Offline) <br> 1 (Online) <br> 2 (Waiting) <br> 3 (Error)</td>
 </tr>
 <tr>
 <td>1</td>
 <td>Drive Mode</td>
+<td>0 (Automatic) <br> 1 (Manual/Direct Drive)</td>
 </tr>
 <tr>
 <td>2</td>
 <td>Sensor Data</td>
+<td>0 (Orange) <br> 1 (Blue) <br> 2 (Pink)</td>
 </tr>
 <tr>
 <td>3</td>
 <td>Path Selection</td>
+<td>0 (Left) <br> 1 (Center) <br> 3 (Right)</td>
 </tr>
 </tbody>
 </table>
