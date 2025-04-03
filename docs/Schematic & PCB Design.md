@@ -14,9 +14,9 @@ Included in the schematic are seven different sections, each with their own resp
 
 ### __Links for High Resolution Visibility__
 - [PDF (Schematic)](https://www.dropbox.com/scl/fi/f9w1i6sscxlyywqqm48h3/IndividualSchematic-HMI-PDF.pdf?rlkey=8xb6ayctkginnebk0vwqdsbgr&st=gkm1hwtc&dl=0)
-- [PDF (PCB)]()
-- [ZIP Folder (Schematic)](https://www.dropbox.com/scl/fi/p3rfl7ne41s3101rtt6n1/Reed-Individual-Schematic-HMI.zip?rlkey=dbggk973my06dv4h1e9o1611x&st=gdkw6vrx&dl=0)
-- [ZIP Folder (PCB)]()
+- [PDF (PCB)](https://www.dropbox.com/scl/fi/6415172i94j4g0n9ks7wz/egr314-pcb.pdf?rlkey=y5skzk8u1ucwclvq4b6xmhiw7&st=i34cb0tu&dl=0)
+- [ZIP Folder (Schematic)](https://www.dropbox.com/scl/fi/7beqg12lv1ck94jwv221e/Reed-Individual-Schematic-HMI.zip?rlkey=qo0x32zzfb3nxm8twjv387nnf&st=shj8wj0g&dl=0)
+- [ZIP Folder (PCB)](https://www.dropbox.com/scl/fi/0rkh08bn1l5gziiwjobsp/Reed-GerberFilesv4.zip?rlkey=7kpe3iyqmpdn1z5ggpjw43w8u&st=a3mcz4uk&dl=0)
 
 ### __Power Budget__
 ![HMI Power Budget](static/images/PowerBudget.png)
