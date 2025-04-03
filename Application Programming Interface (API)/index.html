@@ -827,153 +827,153 @@
 </tbody>
 </table>
 <h3 id="handling-messages-code"><strong>Handling Messages (Code)</strong></h3>
-<p>```python &lt;--- enables the code block below</p>
-<pre><code>#Import Modules
-from machine import UART
-from machine import Pin
-import time
-import uasyncio as asyncio
+<div class="highlight"><pre><span></span><code><span class="c1">#Import Modules</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">UART</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">uasyncio</span> <span class="k">as</span> <span class="nn">asyncio</span>
 
-MAX_MESSAGE_LEN=64
-team = [b'H',b'M',b'A',b'S']
-id = b'H'
-broadcast = b'X'
+<span class="n">MAX_MESSAGE_LEN</span><span class="o">=</span><span class="mi">64</span>
+<span class="n">team</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;H&#39;</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;M&#39;</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;S&#39;</span><span class="p">]</span>
+<span class="nb">id</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;H&#39;</span>
+<span class="n">broadcast</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;X&#39;</span>
 
-VALID_MESSAGE_TYPES = {
-    0x00: [0x00, 0x01, 0x02, 0x03],  # Status Code (0-3)
-    0x01: [0x00, 0x01],              # Drive Mode (0-1)
-    0x02: [0x00, 0x01, 0x02],        # Sensor Data (0-2)
-    0x03: [0x00, 0x01, 0x02]         # Path Selection (0-2)
-}
+<span class="n">VALID_MESSAGE_TYPES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mh">0x00</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">],</span>  <span class="c1"># Status Code (0-3)</span>
+    <span class="mh">0x01</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">],</span>              <span class="c1"># Drive Mode (0-1)</span>
+    <span class="mh">0x02</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">],</span>        <span class="c1"># Sensor Data (0-2)</span>
+    <span class="mh">0x03</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">]</span>         <span class="c1"># Path Selection (0-2)</span>
+<span class="p">}</span>
 
-# initialize a new UART class
-uart = UART(2, 9600,tx=37,rx=36)
-# run the init method with more details including baudrate and parity
-uart.init(9600, bits=8, parity=None, stop=1) 
-# define pin 2 as an output with name led. (Pin 2 is connected to the ESP32-WROOM dev board's onboard blue LED)
-led = Pin(7,Pin.OUT)
+<span class="c1"># initialize a new UART class</span>
+<span class="n">uart</span> <span class="o">=</span> <span class="n">UART</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9600</span><span class="p">,</span><span class="n">tx</span><span class="o">=</span><span class="mi">37</span><span class="p">,</span><span class="n">rx</span><span class="o">=</span><span class="mi">36</span><span class="p">)</span>
 
-def send_message(sender, receiver, msg_type, data):
-   if sender not in team: 
-      print("Error: Invalid sender ID.")
-      return
-   if receiver not in team and receiver != broadcast:
-       print("Error: Invalid receiver ID.")
-       return
-   if msg_type not in VALID_MESSAGE_TYPES or data not in VALID_MESSAGE_TYPES[msg_type]:
-       print("Error: Invalid message type or data value.")
-       return
+<span class="c1"># run the init method with more details including baudrate and parity</span>
+<span class="n">uart</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="mi">9600</span><span class="p">,</span> <span class="n">bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">parity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> 
 
-   message = b"AZ" + sender + receiver + msg_type.to_bytes(2, 'big') + data.to_bytes(1, 'big') + b"YB"
+<span class="c1"># define pin 7 as an output with name led.</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
 
-   uart.write(message)
-   print(f"Sent: {message}")
+<span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">sender</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">team</span><span class="p">:</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Invalid sender ID.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">receiver</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">team</span> <span class="ow">and</span> <span class="n">receiver</span> <span class="o">!=</span> <span class="n">broadcast</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Invalid receiver ID.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">if</span> <span class="n">msg_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_MESSAGE_TYPES</span> <span class="ow">or</span> <span class="n">data</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_MESSAGE_TYPES</span><span class="p">[</span><span class="n">msg_type</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Invalid message type or data value.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
 
-def handle_message(message):
-   try:
-       if len(message) &lt; 7:
-           print("ESP: Message too short, deleting.")
-           return
+    <span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;AZ&quot;</span> <span class="o">+</span> <span class="n">sender</span> <span class="o">+</span> <span class="n">receiver</span> <span class="o">+</span> <span class="n">msg_type</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;YB&quot;</span>
 
-       if len(message) &gt; MAX_MESSAGE_LEN:
-          print("ESP: Message too long, deleting.")
-          return
+    <span class="n">uart</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sent: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-      prefix = message[:2]
-      sender = message[2:3]
-      receiver = message[3:4]
-      msg_type = int.from_bytes(message[4:6], 'big')
-      data = int.from_bytes(message[6:7], 'big')
-      suffix = message[-2:]
+<span class="k">def</span> <span class="nf">handle_message</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESP: Message too short, deleting.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
 
-       if prefix != b"AZ" or suffix != b"YB":
-           print("ESP: Invalid message format, deleting.")
-           return
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_MESSAGE_LEN</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESP: Message too long, deleting.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
 
-        if sender in team:
-            print(f"ESP: Valid sender: {sender.decode()}")
-        else:
-           print(f"ESP: Invalid sender {sender}, deleting.")
-           return
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">message</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">sender</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">receiver</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">msg_type</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">],</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">7</span><span class="p">],</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span>
+        <span class="n">suffix</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
 
-        if receiver in team or receiver == broadcast:
-            print(f"ESP: Valid receiver: {receiver.decode()}")
-        else:
-            print(f"ESP: Invalid receiver {receiver}, deleting.")
-            return
+        <span class="k">if</span> <span class="n">prefix</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;AZ&quot;</span> <span class="ow">or</span> <span class="n">suffix</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;YB&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESP: Invalid message format, deleting.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
 
-        if msg_type not in VALID_MESSAGE_TYPES:
-            print(f"ESP: Invalid message type {msg_type}, deleting.")
-            return
+        <span class="k">if</span> <span class="n">sender</span> <span class="ow">in</span> <span class="n">team</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Valid sender: </span><span class="si">{</span><span class="n">sender</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Invalid sender </span><span class="si">{</span><span class="n">sender</span><span class="si">}</span><span class="s2">, deleting.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
 
-        if data not in VALID_MESSAGE_TYPES[msg_type]:
-            print(f"ESP: Invalid data value {data} for message type {msg_type}, deleting.")
-            return
+        <span class="k">if</span> <span class="n">receiver</span> <span class="ow">in</span> <span class="n">team</span> <span class="ow">or</span> <span class="n">receiver</span> <span class="o">==</span> <span class="n">broadcast</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Valid receiver: </span><span class="si">{</span><span class="n">receiver</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Invalid receiver </span><span class="si">{</span><span class="n">receiver</span><span class="si">}</span><span class="s2">, deleting.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
 
-        # Self-message check AFTER validation
-        if sender == id:
-            print("ESP: Deleted own message.")
-            return
+        <span class="k">if</span> <span class="n">msg_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_MESSAGE_TYPES</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Invalid message type </span><span class="si">{</span><span class="n">msg_type</span><span class="si">}</span><span class="s2">, deleting.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
 
-        # If message is valid and meant for this device
-        if receiver == id or receiver == broadcast:
-            print(f"ESP: Received message from {sender.decode()}! Type {msg_type}, Data {data}")
-            led.value(led.value() ^ 1)  # Toggle LED
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_MESSAGE_TYPES</span><span class="p">[</span><span class="n">msg_type</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Invalid data value </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2"> for message type </span><span class="si">{</span><span class="n">msg_type</span><span class="si">}</span><span class="s2">, deleting.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
 
-        # Forward message if not intended for this device
-        if receiver != id and receiver != broadcast:
-            print(f"ESP: Forwarding message to {receiver.decode()}")
-            uart.write(message)
+        <span class="c1"># Self-message check AFTER validation</span>
+        <span class="k">if</span> <span class="n">sender</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESP: Deleted own message.&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
 
-    except Exception as e:
-        print(f"ESP: Error processing message: {e}")
+        <span class="c1"># If message is valid and meant for this device</span>
+        <span class="k">if</span> <span class="n">receiver</span> <span class="o">==</span> <span class="nb">id</span> <span class="ow">or</span> <span class="n">receiver</span> <span class="o">==</span> <span class="n">broadcast</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Received message from </span><span class="si">{</span><span class="n">sender</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">! Type </span><span class="si">{</span><span class="n">msg_type</span><span class="si">}</span><span class="s2">, Data </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">^</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Toggle LED</span>
 
-async def process_rx():
-    stream = b''  # Buffer to collect incoming message
-    receiving_message = False
+        <span class="c1"># Forward message if not intended for this device</span>
+        <span class="k">if</span> <span class="n">receiver</span> <span class="o">!=</span> <span class="nb">id</span> <span class="ow">and</span> <span class="n">receiver</span> <span class="o">!=</span> <span class="n">broadcast</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Forwarding message to </span><span class="si">{</span><span class="n">receiver</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">uart</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-    while True:
-        c = uart.read(1)  # Read one byte
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Error processing message: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        if c:
-            stream += c  # Append byte to stream
+<span class="k">async</span> <span class="k">def</span> <span class="nf">process_rx</span><span class="p">():</span>
+    <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>  <span class="c1"># Buffer to collect incoming message</span>
+    <span class="n">receiving_message</span> <span class="o">=</span> <span class="kc">False</span>
 
-            if stream[-2:] == b'AZ':  # Message start detected
-                receiving_message = True
-                stream = b'AZ'  # Reset stream, keeping 'AZ'
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">uart</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Read one byte</span>
 
-            if receiving_message and stream[-2:] == b'YB':  # Message end detected
-                receiving_message = False
-                handle_message(stream)  # Process the full message
-                stream = b''  # Reset buffer for next message
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="n">stream</span> <span class="o">+=</span> <span class="n">c</span>  <span class="c1"># Append byte to stream</span>
 
-            if len(stream) &gt; MAX_MESSAGE_LEN:  # Prevent oversized messages
-                print("ESP: Message too long, deleting.")
-                stream = b''  # Clear buffer
-                receiving_message = False
+            <span class="k">if</span> <span class="n">stream</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;AZ&#39;</span><span class="p">:</span>  <span class="c1"># Message start detected</span>
+                <span class="n">receiving_message</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;AZ&#39;</span>  <span class="c1"># Reset stream, keeping &#39;AZ&#39;</span>
 
-        await asyncio.sleep_ms(10)  # Small delay for async handling
+            <span class="k">if</span> <span class="n">receiving_message</span> <span class="ow">and</span> <span class="n">stream</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;YB&#39;</span><span class="p">:</span>  <span class="c1"># Message end detected</span>
+                <span class="n">receiving_message</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">handle_message</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>  <span class="c1"># Process the full message</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>  <span class="c1"># Reset buffer for next message</span>
 
-async def heartbeat():
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_MESSAGE_LEN</span><span class="p">:</span>  <span class="c1"># Prevent oversized messages</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESP: Message too long, deleting.&quot;</span><span class="p">)</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>  <span class="c1"># Clear buffer</span>
+                <span class="n">receiving_message</span> <span class="o">=</span> <span class="kc">False</span>
 
-    while True:
-        #print('ESP: Sending Test Code')
-        send_message(id, b'A', 0x02, 0x01)
-        #uart.write(b'AZHX\x00\x03\x03YB')
-        await asyncio.sleep(10)
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep_ms</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Small delay for async handling   </span>
 
-async def main():
-    while True:
-        await asyncio.sleep(1)
+<span class="k">async</span> <span class="k">def</span> <span class="nf">heartbeat</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ESP: Sending Test Code&#39;</span><span class="p">)</span>
+        <span class="n">send_message</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">)</span>
+        <span class="c1">#uart.write(b&#39;AZHX\x00\x03\x03YB&#39;)</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-asyncio.create_task(process_rx())
-asyncio.create_task(heartbeat())
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-try:
-    asyncio.run(main())
-finally:
-    asyncio.new_event_loop()
-</code></pre>
+<span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">process_rx</span><span class="p">())</span>
+<span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">heartbeat</span><span class="p">())</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
+</code></pre></div>
 
 
 
