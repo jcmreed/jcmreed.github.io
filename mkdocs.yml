@@ -49,7 +49,7 @@ nav:
  - Homepage: 'index.md'
  - Block Diagram: 'Block Diagram.md'
  - Component Selection: 'Component Selection.md'
- - Schematic Design: 'Schematic Design.md'
+ - Schematic & PCB Design: 'Schematic & PCB Design.md'
  - Bill of Materials: 'Bill of Materials.md'
  - Application Programming Interface (API): 'Application Programming Interface (API).md'
   

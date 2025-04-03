@@ -14,6 +14,6 @@ Assignment | Link
 -----|------------
 Block Diagram   | [link](https://jcmreed.github.io/Block%20Diagram/)
 Component Selection | [link](https://jcmreed.github.io/Component%20Selection/)
-Schematic Design | [link](https://jcmreed.github.io/Schematic%20Design/)
+Schematic & PCB Design | [link](https://jcmreed.github.io/Schematic%20&%20PCB%20Design/)
 Bill of Materials | [link](https://jcmreed.github.io/Bill%20of%20Materials/)
 Application Programming Interface (API) | [link](https://jcmreed.github.io/Application%20Programming%20Interface%20(API))

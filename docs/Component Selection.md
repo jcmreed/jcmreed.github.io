@@ -40,10 +40,10 @@ Potential Solutions | Pros | Cons
 --------------------|----------|------
 <img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/4838/WR9HD1333CCP-F%28R6B%29.jpg" alt="Power Supply #1" width="200" height="150"> <br> Option #1: WR9HD1333CCP-F(R6B) - 9V 12 W AC/DC External Wall Mount ($3.94) <br> [link to product](https://www.digikey.com/en/products/detail/globtek-inc/WR9HD1333CCP-F-R6B/13245472) | - Barrel Jack Output <br> - Inexpensive <br> | - 1.33A (Sufficient for ESP32, Might Need More Room for Other Peripherals) <br> - Long Shipping Time
 <img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/2268/MFG_WSUxxx-Series.jpg" alt="Power Supply #2" width="200" height="150"> <br> Option #2: WSU090-2000-13 - 9V 18 W AC/DC External Wall Mount ($12.15)  <br> [link to product](https://www.digikey.com/en/products/detail/triad-magnetics/WSU090-2000-13/6600197) | - Barrel Jack Output <br> - 2A Supply <br> | - Expensive <br> - Long Shipping Time <br> - Bulky Design
-<img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/19/MFG_VEL12-US_dist.jpg" alt="Power Supply #3" width="200" height="150"> <br> Option #3: VEL12US090-US-JA - 9V 12 W AC/DC External Wall Mount ($12.17) <br> [link to product](https://www.digikey.com/en/products/detail/xp-power/VEL12US090-US-JA/5726832) | - Barrel Jack Output <br> - Slim Design <br> | - Expensive <br> - Long Shipping Time <br> - 1.28A Supply
+<img src="https://m.media-amazon.com/images/I/31UE8SX03rS._AC_.jpg" alt="Power Supply #3" width="200" height="150"> <br> Option #3: BestCH 9V 3.0A AC Power Supply Adapter ($4.52) <br> [link to product](https://www.amazon.com/gp/product/B09ZTKTLGW/) | - Barrel Jack Output <br> - 3A Supply <br> - Provided by ASU <br> | - Bulky Design <br> - Datasheet not Provided
 
-__Choice: Option #2: WSU090-2000-13 - 9V 18 W AC/DC External Wall Mount__ <br>
-__Rationale:__ Other options simply need to be able to supply at least 1.5A as the voltage regulator chosen above has an output of 1.5A. In order for every component to function up to their potential and eliminate risk, this wall mount was selected. While it is expensive and has a long shipping time, it works well to meet project specifications.
+__Choice: Option #3: BestCH 9V 3.0A AC Power Supply Adapter__ <br>
+__Rationale:__ The rationale behind this selection is the fact that is can provide up to 3.0A of current for the subsystem. This is more than enough to allow for complete functionality. Furthermore, this component is provided by ASU and allows finances to be focused into other areas. Although this design is bulky, it does the best at meeting project requirements. 
 
 ## __Microcontroller Used: ESP32-S3-WROOM-1-N4__
 ESP Info                                      | Answer |
