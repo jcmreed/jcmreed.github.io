@@ -72,6 +72,22 @@ Peripheral | Pin Assignment (Name, Number)
 -----------|----------------
 Power   | 3V3, 2
 Ground  | GND, 1 <br> GND, 40 <br> GND, 41
-UART    | RXD0, 36 <br> TXD0, 37
+USB     | IO19, 13 (D-) <br> IO20, 14 (D+)
+UART    | IO17, 10 (Tx) <br> TX18, 11 (Rx)
 I2C     | IO21, 23 (SCL) <br> IO47, 24 (SDA)
 GPIO    | IO4, 4 <br> IO5, 5 <br> IO6, 6
+
+## __Summary Table (All Components Selected)__
+Component Selected | Image
+-------------------|------
+ESP32-S3-WROOM-1-N4 Microcontroller ($2.95)| <img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/4257/MFG_Attachment-2-ESP32-S3-WROOM-1.jpg" alt="Pin Layout" width="200" height="200">
+BestCH 9V 3.0A AC Power Supply Adapter ($4.52) | <img src="https://m.media-amazon.com/images/I/31UE8SX03rS._AC_.jpg" alt="Power Supply #3" width="200" height="150">
+L6981C33DR - Buck Switching Regulator ($2.80) | <img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/2802/497%7E8SOIC-3.9%7E%7E8.jpg" alt="Regulator #2" width="200" height="150">
+Songhe 0.96inch OLED LCD Display Board (~$2.00 per board) | <img src="https://m.media-amazon.com/images/I/41qBPSM9XqL._AC_SY450_.jpg" alt="OLED #1" width="200" height="150">
+
+### __Power Budget__
+![HMI Power Budget](static/images/PowerBudget.png)
+
+The power budget is extremely useful in providing viable component options that  safely operate the entire board. This process acts as confirmation and reassurance, while eliminating overall risks of damaging devices. 
+
+

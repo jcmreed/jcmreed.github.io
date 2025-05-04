@@ -52,6 +52,7 @@ nav:
  - Schematic & PCB Design: 'Schematic & PCB Design.md'
  - Bill of Materials: 'Bill of Materials.md'
  - Application Programming Interface (API): 'Application Programming Interface (API).md'
+ - Resources: 'Resources.md'
   
 plugins:
   - search
