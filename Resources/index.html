@@ -90,6 +90,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#video-showcasing-final-hmi-subsystem" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -488,6 +493,17 @@
       
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Resources
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -497,6 +513,70 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#video-showcasing-final-hmi-subsystem" class="md-nav__link">
+    Video Showcasing Final HMI Subsystem
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entire-micropython-code" class="md-nav__link">
+    Entire Micropython Code
+  </a>
+  
+    <nav class="md-nav" aria-label="Entire Micropython Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zip-file-full-esp32-code-project" class="md-nav__link">
+    ZIP File (Full ESP32 Code Project)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cad-modeling-used-oled-stand-pcb-baseplate" class="md-nav__link">
+    CAD Modeling Used (OLED Stand + PCB Baseplate)
+  </a>
+  
+    <nav class="md-nav" aria-label="CAD Modeling Used (OLED Stand + PCB Baseplate)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zip-file-cad-files-screenshots" class="md-nav__link">
+    ZIP File (CAD Files + Screenshots)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -519,6 +599,61 @@
   
   
   
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#video-showcasing-final-hmi-subsystem" class="md-nav__link">
+    Video Showcasing Final HMI Subsystem
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entire-micropython-code" class="md-nav__link">
+    Entire Micropython Code
+  </a>
+  
+    <nav class="md-nav" aria-label="Entire Micropython Code">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zip-file-full-esp32-code-project" class="md-nav__link">
+    ZIP File (Full ESP32 Code Project)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cad-modeling-used-oled-stand-pcb-baseplate" class="md-nav__link">
+    CAD Modeling Used (OLED Stand + PCB Baseplate)
+  </a>
+  
+    <nav class="md-nav" aria-label="CAD Modeling Used (OLED Stand + PCB Baseplate)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#zip-file-cad-files-screenshots" class="md-nav__link">
+    ZIP File (CAD Files + Screenshots)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -543,8 +678,327 @@
 
   <h1>Resources</h1>
 
-<p><strong>Full Code Used</strong></p>
-<p><strong>3D Model for Display Stand</strong></p>
+<h2 id="video-showcasing-final-hmi-subsystem"><strong>Video Showcasing Final HMI Subsystem</strong></h2>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/n4pkgeSHHNY?si=4GZxvWbXj-kQadvP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<h2 id="entire-micropython-code"><strong>Entire Micropython Code</strong></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># --- Imports ---</span>
+<span class="kn">import</span> <span class="nn">my_oled</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">uasyncio</span> <span class="k">as</span> <span class="nn">asyncio</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">UART</span><span class="p">,</span> <span class="n">Pin</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="c1"># --- Debug Mode (Optional Simulation) ---</span>
+<span class="n">TEST_MODE</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">TEST_COLOR_NAME</span> <span class="o">=</span> <span class="s2">&quot;orange&quot;</span>  <span class="c1"># Simulated color if TEST_MODE is True</span>
+
+<span class="c1"># --- UART and Message Constants ---</span>
+<span class="n">MAX_MESSAGE_LEN</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">team</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;S&#39;</span><span class="p">]</span>   <span class="c1"># Team device IDs</span>
+<span class="nb">id</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;H&#39;</span>                         <span class="c1"># This HMI device ID</span>
+<span class="n">broadcast</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;X&#39;</span>                 <span class="c1"># Broadcast ID</span>
+
+<span class="c1"># Valid message types and allowed data</span>
+<span class="n">VALID_MESSAGE_TYPES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mh">0x00</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">],</span>                   <span class="c1"># Status Code</span>
+    <span class="mh">0x01</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">],</span>             <span class="c1"># Drive Mode (0 = Auto, 1 = Manual)</span>
+    <span class="mh">0x02</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">],</span>       <span class="c1"># Sensor Color Data</span>
+    <span class="mh">0x03</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">]</span>        <span class="c1"># Path Selection (User choice)</span>
+<span class="p">}</span>
+
+<span class="c1"># Color codes sent from sensor</span>
+<span class="n">COLOR_CODES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;orange&quot;</span><span class="p">:</span> <span class="mh">0x00</span><span class="p">,</span>
+    <span class="s2">&quot;blue&quot;</span><span class="p">:</span> <span class="mh">0x01</span><span class="p">,</span>
+    <span class="s2">&quot;green&quot;</span><span class="p">:</span> <span class="mh">0x02</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># Elements mapped by color/category</span>
+<span class="n">ELEMENTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mh">0x00</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Aluminum&quot;</span><span class="p">,</span> <span class="s2">&quot;Gold&quot;</span><span class="p">,</span> <span class="s2">&quot;Silver&quot;</span><span class="p">,</span> <span class="s2">&quot;Iron&quot;</span><span class="p">,</span> <span class="s2">&quot;Calcium&quot;</span><span class="p">,</span> <span class="s2">&quot;Sodium&quot;</span><span class="p">,</span> <span class="s2">&quot;Copper&quot;</span><span class="p">,</span> <span class="s2">&quot;Mercury&quot;</span><span class="p">,</span> <span class="s2">&quot;Platinum&quot;</span><span class="p">],</span>     <span class="c1"># Metals</span>
+    <span class="mh">0x01</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Hydrogen&quot;</span><span class="p">,</span> <span class="s2">&quot;Carbon&quot;</span><span class="p">,</span> <span class="s2">&quot;Nitrogen&quot;</span><span class="p">,</span> <span class="s2">&quot;Oxygen&quot;</span><span class="p">,</span> <span class="s2">&quot;Sulfur&quot;</span><span class="p">,</span> <span class="s2">&quot;Chlorine&quot;</span><span class="p">,</span> <span class="s2">&quot;Helium&quot;</span><span class="p">,</span> <span class="s2">&quot;Neon&quot;</span><span class="p">,</span> <span class="s2">&quot;Krypton&quot;</span><span class="p">],</span>  <span class="c1"># Non-Metals</span>
+    <span class="mh">0x02</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Boron&quot;</span><span class="p">,</span> <span class="s2">&quot;Silicon&quot;</span><span class="p">,</span> <span class="s2">&quot;Germanium&quot;</span><span class="p">,</span> <span class="s2">&quot;Arsenic&quot;</span><span class="p">,</span> <span class="s2">&quot;Antimony&quot;</span><span class="p">,</span> <span class="s2">&quot;Tellurium&quot;</span><span class="p">],</span>                            <span class="c1"># Metalloids</span>
+<span class="p">}</span>
+
+<span class="c1"># Element symbols for display</span>
+<span class="n">ELEMENT_SYMBOLS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Aluminum&quot;</span><span class="p">:</span> <span class="s2">&quot;Al&quot;</span><span class="p">,</span> <span class="s2">&quot;Gold&quot;</span><span class="p">:</span> <span class="s2">&quot;Au&quot;</span><span class="p">,</span> <span class="s2">&quot;Silver&quot;</span><span class="p">:</span> <span class="s2">&quot;Ag&quot;</span><span class="p">,</span> <span class="s2">&quot;Iron&quot;</span><span class="p">:</span> <span class="s2">&quot;Fe&quot;</span><span class="p">,</span> <span class="s2">&quot;Calcium&quot;</span><span class="p">:</span> <span class="s2">&quot;Ca&quot;</span><span class="p">,</span> <span class="s2">&quot;Sodium&quot;</span><span class="p">:</span> <span class="s2">&quot;Na&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Copper&quot;</span><span class="p">:</span> <span class="s2">&quot;Cu&quot;</span><span class="p">,</span> <span class="s2">&quot;Mercury&quot;</span><span class="p">:</span> <span class="s2">&quot;Hg&quot;</span><span class="p">,</span> <span class="s2">&quot;Platinum&quot;</span><span class="p">:</span> <span class="s2">&quot;Pt&quot;</span><span class="p">,</span> <span class="s2">&quot;Hydrogen&quot;</span><span class="p">:</span> <span class="s2">&quot;H&quot;</span><span class="p">,</span> <span class="s2">&quot;Carbon&quot;</span><span class="p">:</span> <span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;Nitrogen&quot;</span><span class="p">:</span> <span class="s2">&quot;N&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Oxygen&quot;</span><span class="p">:</span> <span class="s2">&quot;O&quot;</span><span class="p">,</span> <span class="s2">&quot;Sulfur&quot;</span><span class="p">:</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span> <span class="s2">&quot;Chlorine&quot;</span><span class="p">:</span> <span class="s2">&quot;Cl&quot;</span><span class="p">,</span> <span class="s2">&quot;Helium&quot;</span><span class="p">:</span> <span class="s2">&quot;He&quot;</span><span class="p">,</span> <span class="s2">&quot;Neon&quot;</span><span class="p">:</span> <span class="s2">&quot;Ne&quot;</span><span class="p">,</span> <span class="s2">&quot;Krypton&quot;</span><span class="p">:</span> <span class="s2">&quot;Kr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Boron&quot;</span><span class="p">:</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;Silicon&quot;</span><span class="p">:</span> <span class="s2">&quot;Si&quot;</span><span class="p">,</span> <span class="s2">&quot;Germanium&quot;</span><span class="p">:</span> <span class="s2">&quot;Ge&quot;</span><span class="p">,</span> <span class="s2">&quot;Arsenic&quot;</span><span class="p">:</span> <span class="s2">&quot;As&quot;</span><span class="p">,</span> <span class="s2">&quot;Antimony&quot;</span><span class="p">:</span> <span class="s2">&quot;Sb&quot;</span><span class="p">,</span> <span class="s2">&quot;Tellurium&quot;</span><span class="p">:</span> <span class="s2">&quot;Te&quot;</span>
+<span class="p">}</span>
+
+<span class="c1"># --- UI State Variables ---</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Metal&quot;</span><span class="p">,</span> <span class="s2">&quot;Non-Metal&quot;</span><span class="p">,</span> <span class="s2">&quot;Metalloid&quot;</span><span class="p">]</span>
+<span class="n">yesno</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;YES&quot;</span><span class="p">,</span> <span class="s2">&quot;NO&quot;</span><span class="p">]</span>
+<span class="n">selected_element</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">yesno_selection</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">detected_color</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">current_element</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">autonomous_sent</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">led_should_blink</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># --- Hardware Setup ---</span>
+<span class="n">uart</span> <span class="o">=</span> <span class="n">UART</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9600</span><span class="p">,</span> <span class="n">tx</span><span class="o">=</span><span class="mi">17</span><span class="p">,</span> <span class="n">rx</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">uart</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="mi">9600</span><span class="p">,</span> <span class="n">bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">parity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
+
+<span class="c1"># --- Button State Tracking ---</span>
+<span class="n">previous_up</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">previous_down</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">previous_select</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># --- State Machine Definitions ---</span>
+<span class="n">welcome_state</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">drive_state</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">conf_state</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">feedback_state</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">state</span> <span class="o">=</span> <span class="n">welcome_state</span>
+<span class="n">last_input_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="c1"># --- OLED Display Functions ---</span>
+<span class="k">def</span> <span class="nf">Welcome_Display</span><span class="p">():</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;WELCOME TO THE&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;ELEMENT SORTER!&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;PRESS THE&quot;</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;SELECT&quot;</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;~      ~&quot;</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">47</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;BUTTON TO BEGIN!&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">55</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">Bin_Display</span><span class="p">():</span>
+    <span class="c1"># Display the selected element and bin choices</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;WHAT TYPE OF&quot;</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;ELEMENT IS:&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="n">current_element</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">22</span><span class="p">)</span>
+    <span class="n">symbol</span> <span class="o">=</span> <span class="n">ELEMENT_SYMBOLS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">current_element</span><span class="p">,</span> <span class="s2">&quot;??&quot;</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">oled</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">bin_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">bins</span><span class="p">):</span>
+        <span class="n">y_pos</span> <span class="o">=</span> <span class="mi">36</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">selected_element</span><span class="p">:</span>
+            <span class="n">my_oled</span><span class="o">.</span><span class="n">oled</span><span class="o">.</span><span class="n">fill_rect</span><span class="p">(</span><span class="mi">41</span><span class="p">,</span> <span class="n">y_pos</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="n">bin_name</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="n">bin_name</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">Conf_Display</span><span class="p">():</span>
+    <span class="c1"># Display confirmation screen before sending user&#39;s answer</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;YOU&#39;VE SELECTED:&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="n">bins</span><span class="p">[</span><span class="n">selected_element</span><span class="p">],</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;CONFIRM?&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">conf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">yesno</span><span class="p">):</span>
+        <span class="n">y_pos</span> <span class="o">=</span> <span class="mi">40</span> <span class="o">+</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="n">yesno_selection</span><span class="p">:</span>
+            <span class="n">my_oled</span><span class="o">.</span><span class="n">oled</span><span class="o">.</span><span class="n">fill_rect</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">y_pos</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">Feedback_Display</span><span class="p">(</span><span class="n">correct</span><span class="p">,</span> <span class="n">correct_category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Show if the answer was correct/incorrect</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">oled</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">correct</span><span class="p">:</span>
+        <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;YOU ARE&quot;</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+        <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;CORRECT!&quot;</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;YOU ARE&quot;</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;INCORRECT!&quot;</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">correct_category</span><span class="p">:</span>
+            <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;Answer:&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">26</span><span class="p">)</span>
+            <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="n">correct_category</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">26</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;DETECTING NEW&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">46</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">print_text</span><span class="p">(</span><span class="s2">&quot;ELEMENT...&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">56</span><span class="p">)</span>
+    <span class="n">my_oled</span><span class="o">.</span><span class="n">oled</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># --- UART Messaging ---</span>
+<span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="c1"># Validate and send formatted UART message</span>
+    <span class="k">if</span> <span class="n">sender</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">team</span> <span class="ow">or</span> <span class="p">(</span><span class="n">receiver</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">team</span> <span class="ow">and</span> <span class="n">receiver</span> <span class="o">!=</span> <span class="n">broadcast</span><span class="p">):</span> <span class="k">return</span>
+    <span class="k">if</span> <span class="n">msg_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_MESSAGE_TYPES</span> <span class="ow">or</span> <span class="n">data</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_MESSAGE_TYPES</span><span class="p">[</span><span class="n">msg_type</span><span class="p">]:</span> <span class="k">return</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;AZ&quot;</span> <span class="o">+</span> <span class="n">sender</span> <span class="o">+</span> <span class="n">receiver</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">msg_type</span><span class="p">])</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">data</span><span class="p">])</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;YB&quot;</span>
+    <span class="n">uart</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">handle_color_detection</span><span class="p">(</span><span class="n">color_code</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">detected_color</span><span class="p">,</span> <span class="n">current_element</span>
+    <span class="n">detected_color</span> <span class="o">=</span> <span class="n">color_code</span>
+    <span class="n">current_element</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ELEMENTS</span><span class="p">[</span><span class="n">detected_color</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">reset_to_welcome</span><span class="p">():</span>
+    <span class="c1"># Reset UI state to welcome screen</span>
+    <span class="k">global</span> <span class="n">state</span><span class="p">,</span> <span class="n">selected_element</span><span class="p">,</span> <span class="n">yesno_selection</span><span class="p">,</span> <span class="n">previous_up</span><span class="p">,</span> <span class="n">previous_down</span><span class="p">,</span> <span class="n">previous_select</span>
+    <span class="n">selected_element</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">yesno_selection</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">previous_up</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">previous_down</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">previous_select</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">welcome_state</span>
+    <span class="n">Welcome_Display</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">handle_message</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">state</span><span class="p">,</span> <span class="n">last_input_time</span><span class="p">,</span> <span class="n">autonomous_sent</span><span class="p">,</span> <span class="n">led_should_blink</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">7</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_MESSAGE_LEN</span><span class="p">:</span> <span class="k">return</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;AZ&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;YB&quot;</span><span class="p">)):</span> <span class="k">return</span>
+    <span class="n">sender</span><span class="p">,</span> <span class="n">receiver</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">msg_type</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">sender</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span> <span class="k">return</span>  <span class="c1"># Ignore self</span>
+
+    <span class="k">if</span> <span class="n">receiver</span> <span class="o">==</span> <span class="nb">id</span> <span class="ow">or</span> <span class="n">receiver</span> <span class="o">==</span> <span class="n">broadcast</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">msg_type</span> <span class="o">==</span> <span class="mh">0x00</span> <span class="ow">and</span> <span class="n">data</span> <span class="o">==</span> <span class="mh">0x00</span><span class="p">:</span>
+            <span class="n">led_should_blink</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">msg_type</span> <span class="o">==</span> <span class="mh">0x02</span><span class="p">:</span>
+            <span class="n">handle_color_detection</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">msg_type</span> <span class="o">==</span> <span class="mh">0x01</span> <span class="ow">and</span> <span class="n">data</span> <span class="o">==</span> <span class="mh">0x00</span><span class="p">:</span>
+            <span class="n">reset_to_welcome</span><span class="p">()</span>
+            <span class="n">autonomous_sent</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">send_message</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">broadcast</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">)</span>
+
+    <span class="c1"># Always forward valid messages not from self</span>
+    <span class="k">if</span> <span class="n">sender</span> <span class="o">!=</span> <span class="nb">id</span><span class="p">:</span>
+        <span class="n">uart</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+
+<span class="c1"># --- Async UART Message Receiver ---</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">process_rx</span><span class="p">():</span>
+    <span class="n">buf</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+    <span class="n">receiving</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">uart</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
+            <span class="n">buf</span> <span class="o">+=</span> <span class="n">c</span>
+            <span class="k">if</span> <span class="n">buf</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;AZ&#39;</span><span class="p">:</span> <span class="n">buf</span><span class="p">,</span> <span class="n">receiving</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;AZ&#39;</span><span class="p">,</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">receiving</span> <span class="ow">and</span> <span class="n">buf</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;YB&#39;</span><span class="p">:</span>
+                <span class="n">receiving</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="n">handle_message</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span>
+                <span class="n">buf</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_MESSAGE_LEN</span><span class="p">:</span>
+                <span class="n">buf</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+                <span class="n">receiving</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep_ms</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># --- Async LED Blink (status indicator) ---</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">blink_led</span><span class="p">():</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">led_should_blink</span><span class="p">:</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="ow">not</span> <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">())</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep_ms</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># --- Main HMI Event Loop ---</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">hmi_loop</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">previous_up</span><span class="p">,</span> <span class="n">previous_down</span><span class="p">,</span> <span class="n">previous_select</span>
+    <span class="k">global</span> <span class="n">selected_element</span><span class="p">,</span> <span class="n">yesno_selection</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">last_input_time</span><span class="p">,</span> <span class="n">autonomous_sent</span>
+
+    <span class="n">Welcome_Display</span><span class="p">()</span>
+
+    <span class="c1"># Inject test message if enabled</span>
+    <span class="k">if</span> <span class="n">TEST_MODE</span> <span class="ow">and</span> <span class="n">TEST_COLOR_NAME</span> <span class="ow">in</span> <span class="n">COLOR_CODES</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">test_msg</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;AZ&quot;</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;S&#39;</span> <span class="o">+</span> <span class="nb">id</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="mh">0x02</span><span class="p">])</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">COLOR_CODES</span><span class="p">[</span><span class="n">TEST_COLOR_NAME</span><span class="p">]])</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;YB&quot;</span>
+        <span class="n">handle_message</span><span class="p">(</span><span class="n">test_msg</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">current_up</span> <span class="o">=</span> <span class="n">my_oled</span><span class="o">.</span><span class="n">buttonUP</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">current_down</span> <span class="o">=</span> <span class="n">my_oled</span><span class="o">.</span><span class="n">buttonDOWN</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">current_select</span> <span class="o">=</span> <span class="n">my_oled</span><span class="o">.</span><span class="n">buttonSELECT</span><span class="o">.</span><span class="n">value</span><span class="p">()</span>
+        <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+        <span class="c1"># Auto-reset if no activity for 2 minutes</span>
+        <span class="k">if</span> <span class="n">now</span> <span class="o">-</span> <span class="n">last_input_time</span> <span class="o">&gt;</span> <span class="mi">120</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">autonomous_sent</span><span class="p">:</span>
+            <span class="n">reset_to_welcome</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">detected_color</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">send_message</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">broadcast</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">)</span>
+                <span class="n">autonomous_sent</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># --- State Logic ---</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="n">welcome_state</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">current_select</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">previous_select</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">last_input_time</span> <span class="o">=</span> <span class="n">now</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">drive_state</span>
+                <span class="n">Bin_Display</span><span class="p">()</span>
+                <span class="n">send_message</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">broadcast</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">)</span>
+                <span class="n">autonomous_sent</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">drive_state</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">current_up</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">previous_up</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">selected_element</span> <span class="o">=</span> <span class="p">(</span><span class="n">selected_element</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span>
+                <span class="n">Bin_Display</span><span class="p">()</span>
+                <span class="n">last_input_time</span> <span class="o">=</span> <span class="n">now</span>
+            <span class="k">if</span> <span class="n">current_down</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">previous_down</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">selected_element</span> <span class="o">=</span> <span class="p">(</span><span class="n">selected_element</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">bins</span><span class="p">)</span>
+                <span class="n">Bin_Display</span><span class="p">()</span>
+                <span class="n">last_input_time</span> <span class="o">=</span> <span class="n">now</span>
+            <span class="k">if</span> <span class="n">current_select</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">previous_select</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="n">conf_state</span>
+                <span class="n">Conf_Display</span><span class="p">()</span>
+                <span class="n">last_input_time</span> <span class="o">=</span> <span class="n">now</span>
+
+        <span class="k">elif</span> <span class="n">state</span> <span class="o">==</span> <span class="n">conf_state</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">current_up</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">previous_up</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">yesno_selection</span> <span class="o">=</span> <span class="p">(</span><span class="n">yesno_selection</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span>
+                <span class="n">Conf_Display</span><span class="p">()</span>
+                <span class="n">last_input_time</span> <span class="o">=</span> <span class="n">now</span>
+            <span class="k">if</span> <span class="n">current_down</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">previous_down</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">yesno_selection</span> <span class="o">=</span> <span class="p">(</span><span class="n">yesno_selection</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span>
+                <span class="n">Conf_Display</span><span class="p">()</span>
+                <span class="n">last_input_time</span> <span class="o">=</span> <span class="n">now</span>
+            <span class="k">if</span> <span class="n">current_select</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">previous_select</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">yesno_selection</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">send_message</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">,</span> <span class="n">selected_element</span><span class="p">)</span>
+                    <span class="n">correct</span> <span class="o">=</span> <span class="n">selected_element</span> <span class="o">==</span> <span class="n">detected_color</span>
+                    <span class="n">correct_category</span> <span class="o">=</span> <span class="n">bins</span><span class="p">[</span><span class="n">detected_color</span><span class="p">]</span>
+                    <span class="n">Feedback_Display</span><span class="p">(</span><span class="n">correct</span><span class="p">,</span> <span class="n">correct_category</span><span class="p">)</span>
+                    <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="n">drive_state</span>
+                    <span class="n">Bin_Display</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">state</span> <span class="o">=</span> <span class="n">drive_state</span>
+                    <span class="n">Bin_Display</span><span class="p">()</span>
+                <span class="n">last_input_time</span> <span class="o">=</span> <span class="n">now</span>
+
+        <span class="c1"># Save current button states</span>
+        <span class="n">previous_up</span> <span class="o">=</span> <span class="n">current_up</span>
+        <span class="n">previous_down</span> <span class="o">=</span> <span class="n">current_down</span>
+        <span class="n">previous_select</span> <span class="o">=</span> <span class="n">current_select</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+<span class="c1"># --- Main Program Startup ---</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># LED solid on at start</span>
+    <span class="n">send_message</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x00</span><span class="p">)</span>  <span class="c1"># Status update</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">process_rx</span><span class="p">())</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">blink_led</span><span class="p">())</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">hmi_loop</span><span class="p">())</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># --- Run Program ---</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>  <span class="c1"># Ensure loop cleanup</span>
+</code></pre></div>
+<h3 id="zip-file-full-esp32-code-project"><a href="https://www.dropbox.com/scl/fi/55x5pb8690gg1eezanmdn/Final-HMI-Code.zip?rlkey=kodr0qi83y22pp747hb1wczsh&amp;st=5u200o3y&amp;dl=0">ZIP File (Full ESP32 Code Project)</a></h3>
+<h2 id="cad-modeling-used-oled-stand-pcb-baseplate"><strong>CAD Modeling Used (OLED Stand + PCB Baseplate)</strong></h2>
+<table>
+<thead>
+<tr>
+<th><a class="glightbox" href="../static/images/Board_Mount.PNG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Board Mount" src="../static/images/Board_Mount.PNG" /></a> <br> <center><strong>PCB Mount</strong></center></th>
+<th><a class="glightbox" href="../static/images/HMI_display.PNG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="HMI Display" src="../static/images/HMI_display.PNG" /></a> <br> <center><strong>Full HMI Display</strong></center></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a class="glightbox" href="../static/images/Mounting_Arm.PNG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Mounting Arm" src="../static/images/Mounting_Arm.PNG" /></a> <br> <center><strong>Mounting Arm</strong></center></td>
+<td><a class="glightbox" href="../static/images/OLED_mount.PNG" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="OLED Mount" src="../static/images/OLED_mount.PNG" /></a> <br> <center><strong>OLED Mount</strong></center></td>
+</tr>
+</tbody>
+</table>
+<h3 id="zip-file-cad-files-screenshots"><a href="https://www.dropbox.com/scl/fi/ktyll28mq2uq1pk49krji/HMI-CAD-Files.zip?rlkey=4vba82vfc8x5x9vgf0fx8nohp&amp;st=3zeinaun&amp;dl=0">ZIP File (CAD Files + Screenshots)</a></h3>
 
 
 

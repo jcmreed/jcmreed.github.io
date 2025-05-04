@@ -93,7 +93,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#my-role-in-the-project" class="md-skip">
+        <a href="#table-1-selecting-a-pushbutton" class="md-skip">
           Skip to content
         </a>
       
@@ -454,13 +454,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#my-role-in-the-project" class="md-nav__link">
-    My Role in the Project
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#table-1-selecting-a-pushbutton" class="md-nav__link">
     Table 1: Selecting a Pushbutton
   </a>
@@ -530,14 +523,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#power-budget" class="md-nav__link">
-    Power Budget
+  <a href="#decision-making-process-meeting-requirements" class="md-nav__link">
+    Decision Making Process &amp; Meeting Requirements
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-budget" class="md-nav__link">
+    Power Budget
+  </a>
   
 </li>
       
@@ -650,13 +650,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#my-role-in-the-project" class="md-nav__link">
-    My Role in the Project
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#table-1-selecting-a-pushbutton" class="md-nav__link">
     Table 1: Selecting a Pushbutton
   </a>
@@ -726,14 +719,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#power-budget" class="md-nav__link">
-    Power Budget
+  <a href="#decision-making-process-meeting-requirements" class="md-nav__link">
+    Decision Making Process &amp; Meeting Requirements
   </a>
   
 </li>
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#power-budget" class="md-nav__link">
+    Power Budget
+  </a>
   
 </li>
       
@@ -762,8 +762,6 @@
 
   <h1>Component Selection</h1>
 
-<h2 id="my-role-in-the-project"><strong>My Role in the Project</strong></h2>
-<p>My role in this project is to provide exhibit-goers with a Human Machine Interface (HMI) that allows them to take control of the display's actuator. Please refer to <a href="https://asu-egr314-2025-s-201.github.io/02-Ideation%20and%20Concept%20Generation/">my team's webpage</a> for a more detailed descripton of the product. My goal is to allow the user to navigate through the interface with three seperate buttons for movement and selection. Inputs should be reflected on the interface, which is done through a small OLED LCD display. In regards to my communication responsibilities, I am responsible for sending UART commands to my team members in charge of actuators and internet as the stepper motor should move on user command and display information on a mobile device respectively.</p>
 <h2 id="table-1-selecting-a-pushbutton"><strong>Table 1: Selecting a Pushbutton</strong></h2>
 <table>
 <thead>
@@ -1015,9 +1013,22 @@
 </tr>
 </tbody>
 </table>
-<h3 id="power-budget"><strong>Power Budget</strong></h3>
+<h3 id="decision-making-process-meeting-requirements"><strong>Decision Making Process &amp; Meeting Requirements</strong></h3>
+<p>Component selection for my Human-Machine Interface (HMI) subsystem prioritized creating a responsive, reliable interface for our middle school-targeted STEM exhibit. As mentioned previously, the interface necessitated real-time feedback, intuitive interaction, and robust inter-subsystem communication — driving my selection of components offering dependable performance, 3.3V logic compatibility, and seamless integration capabilities.</p>
+<p>All components adhered to key requirements: implementation of serial communication protocols (UART and I2C), operation at 3.3V, and compliance with the standardized message structure shared across subsystems. I favored components readily available through course materials to minimize procurement challenges, decrease budget allocation, and ensure consistent support throughout development. User engagement factored heavily into my decisions — selecting components that would enhance functionality and appeal within an interactive educational environment designed for younger users.</p>
+<p>My major component selections included the <strong>ESP32-S3-WROOM-1-N4</strong> microcontroller for its integrated UART and I2C capabilities, 3.3V logic, compact form factor, and our team's familiarity with it from previous laboratory exercises — providing sufficient GPIO pins for pushbutton integration while supporting the required communication protocols. The <strong>Songhe 0.96" OLED Display (I2C, 3.3V)</strong> was chosen for its minimal footprint, display clarity, and ESP32 compatibility via I2C — additionally offering pre-approval and availability through course resources, thus reducing integration complexity. <strong>Gikfun Tactile Pushbuttons</strong> delivered essential tactile feedback and colorful aesthetics that enhanced exhibit interactivity for younger users, while offering straightforward implementation with GPIO pins and familiar digital logic. The <strong>L6981C33DR 3.3V Switching Regulator</strong> supplied an efficient, high-current (1.5A) 3.3V output from either 5V USB or 9V barrel jack inputs — selected for its optimal balance of current capacity, cost-effectiveness, and suitability for our dual-input configuration.</p>
+<h2 id="power-budget"><strong>Power Budget</strong></h2>
+<p>To ensure stable operation of my Human-Machine Interface (HMI) subsystem, I created the following power budget to estimate the current draw of the major components (OLED and Microcontroller) and verify that my selected power and regulation system could meet those needs under typical and peak loads.</p>
+<p>My system is powered through one of two selectable input sources:</p>
+<ul>
+<li>A BestCH 9V 3.0A AC Power Supply Adapter</li>
+<li>A 5V USB connection (typically 500mA–1.5A depending on host capability).
+<br>(The jumper-based selection system ensures that only one source is active at a time.)</li>
+</ul>
+<p>Both input options feed into the L6981C33DR buck switching regulator, which efficiently converts input voltage down to 3.3V. This regulator supports up to 1.5A output current, which is well above the estimated system load. Take a look at the full power budget below.</p>
 <p><a class="glightbox" href="../static/images/PowerBudget.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="HMI Power Budget" src="../static/images/PowerBudget.png" /></a></p>
-<p>The power budget is extremely useful in providing viable component options that  safely operate the entire board. This process acts as confirmation and reassurance, while eliminating overall risks of damaging devices. </p>
+<p>The power budget is extremely useful in providing viable component options that safely operate the entire board. This process acts as confirmation and reassurance, while eliminating overall risks of damaging devices. Furthermore, my power budget confirmed that the L6981C33DR switching regulator can comfortably supply the required current, even under peak activity. With a maximum output of 1.5A, it operates with a wide safety margin, ensuring stability and thermal headroom.</p>
+<p>The BestCH 9V 3.0A adapter provides more than enough current on the input side to support the regulator’s output, and the USB option is sufficient for low-power testing or debugging. Overall, the power system is robust, efficient, and meets all electrical requirements for continuous exhibit use.</p>
 
 
 

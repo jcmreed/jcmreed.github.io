@@ -532,8 +532,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#message-type-0-status-code" class="md-nav__link">
-    Message Type 0: Status Code
+  <a href="#message-type-0-initialization" class="md-nav__link">
+    Message Type 0: Initialization
   </a>
   
 </li>
@@ -632,8 +632,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#message-type-0-status-code" class="md-nav__link">
-    Message Type 0: Status Code
+  <a href="#message-type-0-initialization" class="md-nav__link">
+    Message Type 0: Initialization
   </a>
   
 </li>
@@ -716,6 +716,11 @@
 <td>Actuator</td>
 <td>A</td>
 </tr>
+<tr>
+<td>ALL</td>
+<td>Broadcast</td>
+<td>X</td>
+</tr>
 </tbody>
 </table>
 <h3 id="team-message-protocol"><strong>Team Message Protocol</strong></h3>
@@ -731,7 +736,7 @@
 <tr>
 <td>0</td>
 <td>Status Code</td>
-<td>0 (Offline) <br> 1 (Online) <br> 2 (Waiting) <br> 3 (Error)</td>
+<td>0 (Initialize)</td>
 </tr>
 <tr>
 <td>1</td>
@@ -750,25 +755,25 @@
 </tr>
 </tbody>
 </table>
-<p>The Human Machine Interface uses 3 of these message types. The first one is the status code, which essentially tells the next system in the chain that my system is online/offline. </p>
-<h3 id="message-type-0-status-code"><strong>Message Type 0: Status Code</strong></h3>
+<p>My  Human Machine Interface uses 3 of these message types. The first one is the status code, which essentially tells the next system in the chain that my system is initialized.</p>
+<h3 id="message-type-0-initialization"><strong>Message Type 0: Initialization</strong></h3>
 <table>
 <thead>
 <tr>
 <th></th>
-<th>Byte 1-2</th>
-<th>Byte 3</th>
+<th>Byte 1</th>
+<th>Byte 2</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Var Name</td>
 <td>msg_type</td>
-<td>status</td>
+<td>initialize</td>
 </tr>
 <tr>
 <td>Var Type</td>
-<td>uint16_t</td>
+<td>uint8_t</td>
 <td>uint8_t</td>
 </tr>
 <tr>
@@ -778,24 +783,24 @@
 </tr>
 <tr>
 <td>Max Val</td>
-<td>3</td>
-<td>3</td>
+<td>0</td>
+<td>0</td>
 </tr>
 <tr>
 <td>Example</td>
 <td>0</td>
-<td>2</td>
+<td>0</td>
 </tr>
 </tbody>
 </table>
-<p>The second message type that my subsystem uses is Message Type 1: Select Mode. This is because when the exhibit user interacts with the HMI, a message must be sent to the chain that the entire system should enter Direct Drive (Manual) Mode. </p>
+<p>The second message type that my subsystem uses is Message Type 1: Select Mode. This is because when the exhibit user interacts with the HMI, a message must be sent to the chain that the entire system should enter Direct Drive (Manual) Mode. Also, if the user does not interact with the device for a certain amount of time, then the message for autonomous mode is sent.</p>
 <h3 id="message-type-1-select-mode"><strong>Message Type 1: Select Mode</strong></h3>
 <table>
 <thead>
 <tr>
 <th></th>
-<th>Byte 1-2</th>
-<th>Byte 3</th>
+<th>Byte 1</th>
+<th>Byte 2</th>
 </tr>
 </thead>
 <tbody>
@@ -806,17 +811,17 @@
 </tr>
 <tr>
 <td>Var Type</td>
-<td>uint16_t</td>
+<td>uint8_t</td>
 <td>uint8_t</td>
 </tr>
 <tr>
 <td>Min Val</td>
-<td>0</td>
+<td>1</td>
 <td>0</td>
 </tr>
 <tr>
 <td>Max Val</td>
-<td>3</td>
+<td>1</td>
 <td>1</td>
 </tr>
 <tr>
@@ -832,8 +837,8 @@
 <thead>
 <tr>
 <th></th>
-<th>Byte 1-2</th>
-<th>Byte 3</th>
+<th>Byte 1</th>
+<th>Byte 2</th>
 </tr>
 </thead>
 <tbody>
@@ -844,12 +849,12 @@
 </tr>
 <tr>
 <td>Var Type</td>
-<td>uint16_t</td>
+<td>uint8_t</td>
 <td>uint8_t</td>
 </tr>
 <tr>
 <td>Min Val</td>
-<td>0</td>
+<td>3</td>
 <td>0</td>
 </tr>
 <tr>
@@ -860,40 +865,42 @@
 <tr>
 <td>Example</td>
 <td>3</td>
-<td>2</td>
+<td>1</td>
 </tr>
 </tbody>
 </table>
 <h3 id="handling-messages-code"><strong>Handling Messages (Code)</strong></h3>
-<div class="highlight"><pre><span></span><code><span class="c1">#Import Modules</span>
-<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">UART</span>
-<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">Pin</span>
+<div class="highlight"><pre><span></span><code><span class="c1"># --- Imports ---</span>
+<span class="kn">from</span> <span class="nn">machine</span> <span class="kn">import</span> <span class="n">UART</span><span class="p">,</span> <span class="n">Pin</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">uasyncio</span> <span class="k">as</span> <span class="nn">asyncio</span>
 
-<span class="n">MAX_MESSAGE_LEN</span><span class="o">=</span><span class="mi">64</span>
-<span class="n">team</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;H&#39;</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;M&#39;</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="sa">b</span><span class="s1">&#39;S&#39;</span><span class="p">]</span>
-<span class="nb">id</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;H&#39;</span>
-<span class="n">broadcast</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;X&#39;</span>
+<span class="c1"># --- Constants and Configuration ---</span>
+<span class="n">MAX_MESSAGE_LEN</span> <span class="o">=</span> <span class="mi">64</span>  <span class="c1"># Max message length to protect buffer overflow</span>
+<span class="n">team</span> <span class="o">=</span> <span class="p">[</span><span class="sa">b</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;S&#39;</span><span class="p">]</span>  <span class="c1"># Valid team device IDs</span>
+<span class="nb">id</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;H&#39;</span>                        <span class="c1"># This device&#39;s ID</span>
+<span class="n">broadcast</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;X&#39;</span>                <span class="c1"># Broadcast ID for sending to all devices</span>
 
+<span class="c1"># Message type definitions and valid data ranges</span>
 <span class="n">VALID_MESSAGE_TYPES</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="mh">0x00</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x03</span><span class="p">],</span>  <span class="c1"># Status Code (0-3)</span>
-    <span class="mh">0x01</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">],</span>              <span class="c1"># Drive Mode (0-1)</span>
-    <span class="mh">0x02</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">],</span>        <span class="c1"># Sensor Data (0-2)</span>
-    <span class="mh">0x03</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">]</span>         <span class="c1"># Path Selection (0-2)</span>
+    <span class="mh">0x00</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">],</span>                    <span class="c1"># Status Code</span>
+    <span class="mh">0x01</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">],</span>              <span class="c1"># Drive Mode</span>
+    <span class="mh">0x02</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">],</span>        <span class="c1"># Sensor Data</span>
+    <span class="mh">0x03</span><span class="p">:</span> <span class="p">[</span><span class="mh">0x00</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">]</span>         <span class="c1"># Path Selection</span>
 <span class="p">}</span>
 
-<span class="c1"># initialize a new UART class</span>
-<span class="n">uart</span> <span class="o">=</span> <span class="n">UART</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9600</span><span class="p">,</span><span class="n">tx</span><span class="o">=</span><span class="mi">37</span><span class="p">,</span><span class="n">rx</span><span class="o">=</span><span class="mi">36</span><span class="p">)</span>
+<span class="c1"># --- Hardware Initialization ---</span>
+<span class="c1"># UART2 with TX on GPIO17, RX on GPIO18</span>
+<span class="n">uart</span> <span class="o">=</span> <span class="n">UART</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">9600</span><span class="p">,</span> <span class="n">tx</span><span class="o">=</span><span class="mi">17</span><span class="p">,</span> <span class="n">rx</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">uart</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="mi">9600</span><span class="p">,</span> <span class="n">bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">parity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># run the init method with more details including baudrate and parity</span>
-<span class="n">uart</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="mi">9600</span><span class="p">,</span> <span class="n">bits</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">parity</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> 
+<span class="c1"># Onboard LED for visual feedback (GPIO 7)</span>
+<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
 
-<span class="c1"># define pin 7 as an output with name led.</span>
-<span class="n">led</span> <span class="o">=</span> <span class="n">Pin</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="n">Pin</span><span class="o">.</span><span class="n">OUT</span><span class="p">)</span>
-
+<span class="c1"># --- Message Sending Function ---</span>
 <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="n">msg_type</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">sender</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">team</span><span class="p">:</span> 
+    <span class="c1"># Validate sender, receiver, type, and data</span>
+    <span class="k">if</span> <span class="n">sender</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">team</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Invalid sender ID.&quot;</span><span class="p">)</span>
         <span class="k">return</span>
     <span class="k">if</span> <span class="n">receiver</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">team</span> <span class="ow">and</span> <span class="n">receiver</span> <span class="o">!=</span> <span class="n">broadcast</span><span class="p">:</span>
@@ -903,63 +910,62 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: Invalid message type or data value.&quot;</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;AZ&quot;</span> <span class="o">+</span> <span class="n">sender</span> <span class="o">+</span> <span class="n">receiver</span> <span class="o">+</span> <span class="n">msg_type</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;YB&quot;</span>
-
+    <span class="c1"># Construct and send the UART message</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;AZ&quot;</span> <span class="o">+</span> <span class="n">sender</span> <span class="o">+</span> <span class="n">receiver</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">msg_type</span><span class="p">])</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">data</span><span class="p">])</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;YB&quot;</span>
     <span class="n">uart</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sent: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
+<span class="c1"># --- Message Receiving and Handling Function ---</span>
 <span class="k">def</span> <span class="nf">handle_message</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Basic message size validation</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">7</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESP: Message too short, deleting.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
-
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_MESSAGE_LEN</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESP: Message too long, deleting.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
+        <span class="c1"># Parse message structure</span>
         <span class="n">prefix</span> <span class="o">=</span> <span class="n">message</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">sender</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
         <span class="n">receiver</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
-        <span class="n">msg_type</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">6</span><span class="p">],</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">message</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">7</span><span class="p">],</span> <span class="s1">&#39;big&#39;</span><span class="p">)</span>
+        <span class="n">msg_type</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> 
+        <span class="n">data</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> 
         <span class="n">suffix</span> <span class="o">=</span> <span class="n">message</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
 
+        <span class="c1"># Check for proper framing</span>
         <span class="k">if</span> <span class="n">prefix</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;AZ&quot;</span> <span class="ow">or</span> <span class="n">suffix</span> <span class="o">!=</span> <span class="sa">b</span><span class="s2">&quot;YB&quot;</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESP: Invalid message format, deleting.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
-        <span class="k">if</span> <span class="n">sender</span> <span class="ow">in</span> <span class="n">team</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Valid sender: </span><span class="si">{</span><span class="n">sender</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Validate sender and receiver</span>
+        <span class="k">if</span> <span class="n">sender</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">team</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Invalid sender </span><span class="si">{</span><span class="n">sender</span><span class="si">}</span><span class="s2">, deleting.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
-
-        <span class="k">if</span> <span class="n">receiver</span> <span class="ow">in</span> <span class="n">team</span> <span class="ow">or</span> <span class="n">receiver</span> <span class="o">==</span> <span class="n">broadcast</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Valid receiver: </span><span class="si">{</span><span class="n">receiver</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">receiver</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">team</span> <span class="ow">and</span> <span class="n">receiver</span> <span class="o">!=</span> <span class="n">broadcast</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Invalid receiver </span><span class="si">{</span><span class="n">receiver</span><span class="si">}</span><span class="s2">, deleting.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
+        <span class="c1"># Validate message type and associated data</span>
         <span class="k">if</span> <span class="n">msg_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_MESSAGE_TYPES</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Invalid message type </span><span class="si">{</span><span class="n">msg_type</span><span class="si">}</span><span class="s2">, deleting.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
-
         <span class="k">if</span> <span class="n">data</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_MESSAGE_TYPES</span><span class="p">[</span><span class="n">msg_type</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Invalid data value </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2"> for message type </span><span class="si">{</span><span class="n">msg_type</span><span class="si">}</span><span class="s2">, deleting.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
-        <span class="c1"># Self-message check AFTER validation</span>
+        <span class="c1"># Drop message if it&#39;s from self</span>
         <span class="k">if</span> <span class="n">sender</span> <span class="o">==</span> <span class="nb">id</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESP: Deleted own message.&quot;</span><span class="p">)</span>
             <span class="k">return</span>
 
-        <span class="c1"># If message is valid and meant for this device</span>
+        <span class="c1"># Act on messages addressed to this device or broadcast</span>
         <span class="k">if</span> <span class="n">receiver</span> <span class="o">==</span> <span class="nb">id</span> <span class="ow">or</span> <span class="n">receiver</span> <span class="o">==</span> <span class="n">broadcast</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Received message from </span><span class="si">{</span><span class="n">sender</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">! Type </span><span class="si">{</span><span class="n">msg_type</span><span class="si">}</span><span class="s2">, Data </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">^</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Toggle LED</span>
+            <span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="n">led</span><span class="o">.</span><span class="n">value</span><span class="p">()</span> <span class="o">^</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># Toggle LED for activity feedback</span>
 
-        <span class="c1"># Forward message if not intended for this device</span>
+        <span class="c1"># Forward messages not intended for this device</span>
         <span class="k">if</span> <span class="n">receiver</span> <span class="o">!=</span> <span class="nb">id</span> <span class="ow">and</span> <span class="n">receiver</span> <span class="o">!=</span> <span class="n">broadcast</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Forwarding message to </span><span class="si">{</span><span class="n">receiver</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="n">uart</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
@@ -967,50 +973,59 @@
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESP: Error processing message: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
+<span class="c1"># --- Asynchronous Task: UART Receiver ---</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">process_rx</span><span class="p">():</span>
-    <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>  <span class="c1"># Buffer to collect incoming message</span>
-    <span class="n">receiving_message</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>              <span class="c1"># Buffer for collecting bytes</span>
+    <span class="n">receiving_message</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># Flag for message collection state</span>
 
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">c</span> <span class="o">=</span> <span class="n">uart</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Read one byte</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">uart</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Read 1 byte at a time</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
-            <span class="n">stream</span> <span class="o">+=</span> <span class="n">c</span>  <span class="c1"># Append byte to stream</span>
+            <span class="n">stream</span> <span class="o">+=</span> <span class="n">c</span>
 
-            <span class="k">if</span> <span class="n">stream</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;AZ&#39;</span><span class="p">:</span>  <span class="c1"># Message start detected</span>
+            <span class="c1"># Detect message start</span>
+            <span class="k">if</span> <span class="n">stream</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;AZ&#39;</span><span class="p">:</span>
                 <span class="n">receiving_message</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;AZ&#39;</span>  <span class="c1"># Reset stream, keeping &#39;AZ&#39;</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;AZ&#39;</span>  <span class="c1"># Reset buffer with prefix only</span>
 
-            <span class="k">if</span> <span class="n">receiving_message</span> <span class="ow">and</span> <span class="n">stream</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;YB&#39;</span><span class="p">:</span>  <span class="c1"># Message end detected</span>
+            <span class="c1"># Detect complete message</span>
+            <span class="k">if</span> <span class="n">receiving_message</span> <span class="ow">and</span> <span class="n">stream</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;YB&#39;</span><span class="p">:</span>
                 <span class="n">receiving_message</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="n">handle_message</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>  <span class="c1"># Process the full message</span>
-                <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>  <span class="c1"># Reset buffer for next message</span>
+                <span class="n">handle_message</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
 
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_MESSAGE_LEN</span><span class="p">:</span>  <span class="c1"># Prevent oversized messages</span>
+            <span class="c1"># Drop overlong messages</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">MAX_MESSAGE_LEN</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ESP: Message too long, deleting.&quot;</span><span class="p">)</span>
-                <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>  <span class="c1"># Clear buffer</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
                 <span class="n">receiving_message</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep_ms</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Small delay for async handling   </span>
+        <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep_ms</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
+<span class="c1"># --- Asynchronous Task: Heartbeat / Test Ping ---</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">heartbeat</span><span class="p">():</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ESP: Sending Test Code&#39;</span><span class="p">)</span>
-        <span class="n">send_message</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="sa">b</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="mh">0x02</span><span class="p">,</span> <span class="mh">0x01</span><span class="p">)</span>
-        <span class="c1">#uart.write(b&#39;AZHX\x00\x03\x03YB&#39;)</span>
+        <span class="c1"># Uncomment below to send a sample message for testing</span>
+        <span class="c1"># send_message(b&#39;S&#39;, id, 0x02, 0x02)</span>
+        <span class="c1"># uart.write(b&#39;AZHX\x00\x03\x03YB&#39;)</span>
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
+<span class="c1"># --- Main Loop (placeholder for future tasks) ---</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">process_rx</span><span class="p">())</span>
-<span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">heartbeat</span><span class="p">())</span>
+<span class="c1"># --- Task Scheduling ---</span>
+<span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">process_rx</span><span class="p">())</span>     <span class="c1"># Start UART receiver</span>
+<span class="n">asyncio</span><span class="o">.</span><span class="n">create_task</span><span class="p">(</span><span class="n">heartbeat</span><span class="p">())</span>      <span class="c1"># Start heartbeat sender</span>
 
+<span class="c1"># --- Run Event Loop ---</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">main</span><span class="p">())</span>
 <span class="k">finally</span><span class="p">:</span>
-    <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>
+    <span class="n">asyncio</span><span class="o">.</span><span class="n">new_event_loop</span><span class="p">()</span>  <span class="c1"># Reset event loop if interrupted</span>
 </code></pre></div>
 
 
