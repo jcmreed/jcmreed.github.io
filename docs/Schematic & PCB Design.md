@@ -42,7 +42,7 @@ Finally, while I included a ground plane on the top layer, I neglected to fill t
 ## __Team PCB Design__
 ![Team 201's PCB Designs](static/images/Team201.png)
 
-As pictured above, Team 201 comprised four members, each assigned to a specific subsystem (left-to-right): Human-Machine Interface (HMI), Sensor, MQTT, and Actuator — arranged in a daisy-chain communication configuration that reflected the logical progression of user interaction. This sequence began with the HMI initiating the process, followed by the sensor detecting a ball, MQTT functioning as the communication bridge, and concluding with the actuator repositioning the ball according to user selection.
+As pictured above, Team 201 comprised four members, each assigned to a specific subsystem (left-to-right): __Human-Machine Interface (HMI), Sensor, MQTT, and Actuator__ — arranged in a daisy-chain communication configuration that reflected the logical progression of user interaction. This sequence began with the HMI initiating the process, followed by the sensor detecting a ball, MQTT functioning as the communication bridge, and concluding with the actuator repositioning the ball according to user selection.
 
 Our design decisions responded directly to both project goals and class requirements — particularly the mandated UART-based message structure and 2x4 ribbon cable pinout standard that ensured cross-subsystem compatibility while providing a unified technical foundation for development.
 

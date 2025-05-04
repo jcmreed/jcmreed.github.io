@@ -15,7 +15,7 @@ Each team member has their own responsibility on what to send to the chain and h
 | ALL | Broadcast | X |
 
 ### __Team Message Protocol__
-|Message Type <br> byte 1-2 <br>(uint16_t) | Description| Data Command |
+|Message Type <br> byte 1 <br>(uint8_t) | Description| Data Command |
 |-------------------|---------------| -------------------------- |
 |0                  | Status Code   | 0 (Initialize) | 
 |1                  | Drive Mode    | 0 (Automatic) <br> 1 (Manual/Direct Drive) |
