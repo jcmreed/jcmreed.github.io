@@ -12,80 +12,83 @@ Each team member has their own responsibility on what to send to the chain and h
 | Eric M | RGB Sensor | S |
 | Marcus P | MQTT Server | M |
 | Bradley P | Actuator | A |
+| ALL | Broadcast | X |
 
 ### __Team Message Protocol__
 |Message Type <br> byte 1-2 <br>(uint16_t) | Description| Data Command |
 |-------------------|---------------| -------------------------- |
-|0                  | Status Code   | 0 (Offline) <br> 1 (Online) <br> 2 (Waiting) <br> 3 (Error) | 
+|0                  | Status Code   | 0 (Initialize) | 
 |1                  | Drive Mode    | 0 (Automatic) <br> 1 (Manual/Direct Drive) |
 |2                  | Sensor Data   | 0 (Orange) <br> 1 (Blue) <br> 2 (Pink) |
 |3                  | Path Selection| 0 (Left) <br> 1 (Center) <br> 3 (Right) |
 
-The Human Machine Interface uses 3 of these message types. The first one is the status code, which essentially tells the next system in the chain that my system is online/offline. 
+My  Human Machine Interface uses 3 of these message types. The first one is the status code, which essentially tells the next system in the chain that my system is initialized.
 
-### __Message Type 0: Status Code__
-|         |  Byte 1-2  | Byte 3 | 
+### __Message Type 0: Initialization__
+|         |  Byte 1  | Byte 2 | 
 |---------|----------|---------|
-|Var Name | msg_type | status  |
-|Var Type | uint16_t | uint8_t |
+|Var Name | msg_type | initialize  |
+|Var Type | uint8_t | uint8_t |
 |Min Val  | 0        | 0       | 
-|Max Val  | 3        | 3       |
-|Example  | 0        | 2       |
+|Max Val  | 0        | 0       |
+|Example  | 0        | 0       |
 
-The second message type that my subsystem uses is Message Type 1: Select Mode. This is because when the exhibit user interacts with the HMI, a message must be sent to the chain that the entire system should enter Direct Drive (Manual) Mode. 
+The second message type that my subsystem uses is Message Type 1: Select Mode. This is because when the exhibit user interacts with the HMI, a message must be sent to the chain that the entire system should enter Direct Drive (Manual) Mode. Also, if the user does not interact with the device for a certain amount of time, then the message for autonomous mode is sent.
 
 ### __Message Type 1: Select Mode__
-|         |  Byte 1-2  | Byte 3 | 
+|         |  Byte 1  | Byte 2 | 
 |---------|----------|---------|
 |Var Name | msg_type | mode  |
-|Var Type | uint16_t | uint8_t |
-|Min Val  | 0        | 0       | 
-|Max Val  | 3        | 1       |
+|Var Type | uint8_t | uint8_t |
+|Min Val  | 1        | 0       | 
+|Max Val  | 1        | 1       |
 |Example  | 1        | 1       |
 
 The final message type that my subsystem uses is Message Type 3: Select Path. The user must make a path choice on the HMI, and depending on their selection, that's what tells the Actuator where to move to.
 
 ### __Message Type 3: Select Path__
-|         |  Byte 1-2  | Byte 3 |
+|         |  Byte 1  | Byte 2 |
 |---------|------------|--------|
 |Var Name | msg_type   | path   |
-|Var Type | uint16_t   | uint8_t|
-|Min Val  | 0          | 0      |
+|Var Type | uint8_t   | uint8_t|
+|Min Val  | 3          | 0      |
 |Max Val  | 3          | 2      |
-|Example  | 3          | 2      |
+|Example  | 3          | 1      |
 
 ### __Handling Messages (Code)__
 
 ```python
-#Import Modules
-from machine import UART
-from machine import Pin
+# --- Imports ---
+from machine import UART, Pin
 import time
 import uasyncio as asyncio
 
-MAX_MESSAGE_LEN=64
-team = [b'H',b'M',b'A',b'S']
-id = b'H'
-broadcast = b'X'
+# --- Constants and Configuration ---
+MAX_MESSAGE_LEN = 64  # Max message length to protect buffer overflow
+team = [b'H', b'M', b'A', b'S']  # Valid team device IDs
+id = b'H'                        # This device's ID
+broadcast = b'X'                # Broadcast ID for sending to all devices
 
+# Message type definitions and valid data ranges
 VALID_MESSAGE_TYPES = {
-    0x00: [0x00, 0x01, 0x02, 0x03],  # Status Code (0-3)
-    0x01: [0x00, 0x01],              # Drive Mode (0-1)
-    0x02: [0x00, 0x01, 0x02],        # Sensor Data (0-2)
-    0x03: [0x00, 0x01, 0x02]         # Path Selection (0-2)
+    0x00: [0x00],                    # Status Code
+    0x01: [0x00, 0x01],              # Drive Mode
+    0x02: [0x00, 0x01, 0x02],        # Sensor Data
+    0x03: [0x00, 0x01, 0x02]         # Path Selection
 }
 
-# initialize a new UART class
-uart = UART(2, 9600,tx=37,rx=36)
+# --- Hardware Initialization ---
+# UART2 with TX on GPIO17, RX on GPIO18
+uart = UART(2, 9600, tx=17, rx=18)
+uart.init(9600, bits=8, parity=None, stop=1)
 
-# run the init method with more details including baudrate and parity
-uart.init(9600, bits=8, parity=None, stop=1) 
+# Onboard LED for visual feedback (GPIO 7)
+led = Pin(7, Pin.OUT)
 
-# define pin 7 as an output with name led.
-led = Pin(7,Pin.OUT)
-
+# --- Message Sending Function ---
 def send_message(sender, receiver, msg_type, data):
-    if sender not in team: 
+    # Validate sender, receiver, type, and data
+    if sender not in team:
         print("Error: Invalid sender ID.")
         return
     if receiver not in team and receiver != broadcast:
@@ -94,113 +97,121 @@ def send_message(sender, receiver, msg_type, data):
     if msg_type not in VALID_MESSAGE_TYPES or data not in VALID_MESSAGE_TYPES[msg_type]:
         print("Error: Invalid message type or data value.")
         return
-    
-    message = b"AZ" + sender + receiver + msg_type.to_bytes(2, 'big') + data.to_bytes(1, 'big') + b"YB"
-    
+
+    # Construct and send the UART message
+    message = b"AZ" + sender + receiver + bytes([msg_type]) + bytes([data]) + b"YB"
     uart.write(message)
     print(f"Sent: {message}")
 
+# --- Message Receiving and Handling Function ---
 def handle_message(message):
     try:
+        # Basic message size validation
         if len(message) < 7:
             print("ESP: Message too short, deleting.")
             return
-        
         if len(message) > MAX_MESSAGE_LEN:
             print("ESP: Message too long, deleting.")
             return
 
+        # Parse message structure
         prefix = message[:2]
         sender = message[2:3]
         receiver = message[3:4]
-        msg_type = int.from_bytes(message[4:6], 'big')
-        data = int.from_bytes(message[6:7], 'big')
+        msg_type = message[4] 
+        data = message[5] 
         suffix = message[-2:]
 
+        # Check for proper framing
         if prefix != b"AZ" or suffix != b"YB":
             print("ESP: Invalid message format, deleting.")
             return
-        
-        if sender in team:
-            print(f"ESP: Valid sender: {sender.decode()}")
-        else:
+
+        # Validate sender and receiver
+        if sender not in team:
             print(f"ESP: Invalid sender {sender}, deleting.")
             return
-        
-        if receiver in team or receiver == broadcast:
-            print(f"ESP: Valid receiver: {receiver.decode()}")
-        else:
+        if receiver not in team and receiver != broadcast:
             print(f"ESP: Invalid receiver {receiver}, deleting.")
             return
-        
+
+        # Validate message type and associated data
         if msg_type not in VALID_MESSAGE_TYPES:
             print(f"ESP: Invalid message type {msg_type}, deleting.")
             return
-        
         if data not in VALID_MESSAGE_TYPES[msg_type]:
             print(f"ESP: Invalid data value {data} for message type {msg_type}, deleting.")
             return
-        
-        # Self-message check AFTER validation
+
+        # Drop message if it's from self
         if sender == id:
             print("ESP: Deleted own message.")
             return
 
-        # If message is valid and meant for this device
+        # Act on messages addressed to this device or broadcast
         if receiver == id or receiver == broadcast:
             print(f"ESP: Received message from {sender.decode()}! Type {msg_type}, Data {data}")
-            led.value(led.value() ^ 1)  # Toggle LED
+            led.value(led.value() ^ 1)  # Toggle LED for activity feedback
 
-        # Forward message if not intended for this device
+        # Forward messages not intended for this device
         if receiver != id and receiver != broadcast:
             print(f"ESP: Forwarding message to {receiver.decode()}")
             uart.write(message)
 
     except Exception as e:
         print(f"ESP: Error processing message: {e}")
-    
+
+# --- Asynchronous Task: UART Receiver ---
 async def process_rx():
-    stream = b''  # Buffer to collect incoming message
-    receiving_message = False
+    stream = b''              # Buffer for collecting bytes
+    receiving_message = False # Flag for message collection state
 
     while True:
-        c = uart.read(1)  # Read one byte
+        c = uart.read(1)  # Read 1 byte at a time
 
         if c:
-            stream += c  # Append byte to stream
+            stream += c
 
-            if stream[-2:] == b'AZ':  # Message start detected
+            # Detect message start
+            if stream[-2:] == b'AZ':
                 receiving_message = True
-                stream = b'AZ'  # Reset stream, keeping 'AZ'
+                stream = b'AZ'  # Reset buffer with prefix only
 
-            if receiving_message and stream[-2:] == b'YB':  # Message end detected
+            # Detect complete message
+            if receiving_message and stream[-2:] == b'YB':
                 receiving_message = False
-                handle_message(stream)  # Process the full message
-                stream = b''  # Reset buffer for next message
+                handle_message(stream)
+                stream = b''
 
-            if len(stream) > MAX_MESSAGE_LEN:  # Prevent oversized messages
+            # Drop overlong messages
+            if len(stream) > MAX_MESSAGE_LEN:
                 print("ESP: Message too long, deleting.")
-                stream = b''  # Clear buffer
+                stream = b''
                 receiving_message = False
 
-        await asyncio.sleep_ms(10)  # Small delay for async handling   
+        await asyncio.sleep_ms(10)
 
+# --- Asynchronous Task: Heartbeat / Test Ping ---
 async def heartbeat():
     while True:
         print('ESP: Sending Test Code')
-        send_message(id, b'A', 0x02, 0x01)
-        #uart.write(b'AZHX\x00\x03\x03YB')
+        # Uncomment below to send a sample message for testing
+        # send_message(b'S', id, 0x02, 0x02)
+        # uart.write(b'AZHX\x00\x03\x03YB')
         await asyncio.sleep(10)
 
+# --- Main Loop (placeholder for future tasks) ---
 async def main():
     while True:
         await asyncio.sleep(1)
 
-asyncio.create_task(process_rx())
-asyncio.create_task(heartbeat())
+# --- Task Scheduling ---
+asyncio.create_task(process_rx())     # Start UART receiver
+asyncio.create_task(heartbeat())      # Start heartbeat sender
 
+# --- Run Event Loop ---
 try:
     asyncio.run(main())
 finally:
-    asyncio.new_event_loop()
+    asyncio.new_event_loop()  # Reset event loop if interrupted
 ```

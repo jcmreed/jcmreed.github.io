@@ -2,9 +2,6 @@
 title: Component Selection
 ---
 
-## __My Role in the Project__
-My role in this project is to provide exhibit-goers with a Human Machine Interface (HMI) that allows them to take control of the display's actuator. Please refer to [my team's webpage](https://asu-egr314-2025-s-201.github.io/02-Ideation%20and%20Concept%20Generation/) for a more detailed descripton of the product. My goal is to allow the user to navigate through the interface with three seperate buttons for movement and selection. Inputs should be reflected on the interface, which is done through a small OLED LCD display. In regards to my communication responsibilities, I am responsible for sending UART commands to my team members in charge of actuators and internet as the stepper motor should move on user command and display information on a mobile device respectively.
-
 ## __Table 1: Selecting a Pushbutton__
 Potential Solutions | Pros | Cons
 --------------------|----------|------
@@ -85,9 +82,28 @@ BestCH 9V 3.0A AC Power Supply Adapter ($4.52) | <img src="https://m.media-amazo
 L6981C33DR - Buck Switching Regulator ($2.80) | <img src="https://mm.digikey.com/Volume0/opasdata/d220001/medias/images/2802/497%7E8SOIC-3.9%7E%7E8.jpg" alt="Regulator #2" width="200" height="150">
 Songhe 0.96inch OLED LCD Display Board (~$2.00 per board) | <img src="https://m.media-amazon.com/images/I/41qBPSM9XqL._AC_SY450_.jpg" alt="OLED #1" width="200" height="150">
 
-### __Power Budget__
+### __Decision Making Process & Meeting Requirements__
+Component selection for my Human-Machine Interface (HMI) subsystem prioritized creating a responsive, reliable interface for our middle school-targeted STEM exhibit. As mentioned previously, the interface necessitated real-time feedback, intuitive interaction, and robust inter-subsystem communication — driving my selection of components offering dependable performance, 3.3V logic compatibility, and seamless integration capabilities.
+
+All components adhered to key requirements: implementation of serial communication protocols (UART and I2C), operation at 3.3V, and compliance with the standardized message structure shared across subsystems. I favored components readily available through course materials to minimize procurement challenges, decrease budget allocation, and ensure consistent support throughout development. User engagement factored heavily into my decisions — selecting components that would enhance functionality and appeal within an interactive educational environment designed for younger users.
+
+My major component selections included the __ESP32-S3-WROOM-1-N4__ microcontroller for its integrated UART and I2C capabilities, 3.3V logic, compact form factor, and our team's familiarity with it from previous laboratory exercises — providing sufficient GPIO pins for pushbutton integration while supporting the required communication protocols. The __Songhe 0.96" OLED Display (I2C, 3.3V)__ was chosen for its minimal footprint, display clarity, and ESP32 compatibility via I2C — additionally offering pre-approval and availability through course resources, thus reducing integration complexity. __Gikfun Tactile Pushbuttons__ delivered essential tactile feedback and colorful aesthetics that enhanced exhibit interactivity for younger users, while offering straightforward implementation with GPIO pins and familiar digital logic. The __L6981C33DR 3.3V Switching Regulator__ supplied an efficient, high-current (1.5A) 3.3V output from either 5V USB or 9V barrel jack inputs — selected for its optimal balance of current capacity, cost-effectiveness, and suitability for our dual-input configuration.
+
+## __Power Budget__
+To ensure stable operation of my Human-Machine Interface (HMI) subsystem, I created the following power budget to estimate the current draw of the major components (OLED and Microcontroller) and verify that my selected power and regulation system could meet those needs under typical and peak loads.
+
+My system is powered through one of two selectable input sources:
+
+- A BestCH 9V 3.0A AC Power Supply Adapter
+- A 5V USB connection (typically 500mA–1.5A depending on host capability).
+<br>(The jumper-based selection system ensures that only one source is active at a time.)
+
+Both input options feed into the L6981C33DR buck switching regulator, which efficiently converts input voltage down to 3.3V. This regulator supports up to 1.5A output current, which is well above the estimated system load. Take a look at the full power budget below.
+
 ![HMI Power Budget](static/images/PowerBudget.png)
 
-The power budget is extremely useful in providing viable component options that  safely operate the entire board. This process acts as confirmation and reassurance, while eliminating overall risks of damaging devices. 
+The power budget is extremely useful in providing viable component options that safely operate the entire board. This process acts as confirmation and reassurance, while eliminating overall risks of damaging devices. Furthermore, my power budget confirmed that the L6981C33DR switching regulator can comfortably supply the required current, even under peak activity. With a maximum output of 1.5A, it operates with a wide safety margin, ensuring stability and thermal headroom.
+
+The BestCH 9V 3.0A adapter provides more than enough current on the input side to support the regulator’s output, and the USB option is sufficient for low-power testing or debugging. Overall, the power system is robust, efficient, and meets all electrical requirements for continuous exhibit use.
 
 
