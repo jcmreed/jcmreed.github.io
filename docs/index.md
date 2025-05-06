@@ -8,7 +8,7 @@ tags:
 # __Welcome to the landing page for direct access to all of JC Reed's indiviual assignments for EGR314!__
 
 ## __My Role in the Project__
-My role in this project was to design and implement the Human-Machine Interface (HMI) for our interactive STEM exhibit. The purpose of the HMI was to give exhibit-goers an intuitive way to interact with the system and control the sorting mechanism. A more detailed overview of the complete system can be found on [my team's webpage.](https://asu-egr314-2025-s-201.github.io/02-Ideation%20and%20Concept%20Generation/)
+My role in this project was to design and implement the Human-Machine Interface (HMI) for our interactive STEM exhibit. The purpose of the HMI was to give exhibit-goers an intuitive way to interact with the system and control the sorting mechanism. A more detailed overview of the complete system can be found on [my team's webpage.](https://asu-egr314-2025-s-201.github.io/)
 
 My interface was built around three physical pushbuttons that allow users to navigate through a selection menu and confirm their choices. Feedback and instructions were provided via a compact OLED LCD display, allowing users to see their input in real-time and follow along with the quiz-like experience.
 

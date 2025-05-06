@@ -12,10 +12,9 @@ __Back View__
 ![Human Machine Interface (HMI) Printed Circuit Board (Back)](static/images/PCB (Back).png)
 
 ### __Links for High Resolution Visibility__
-- [PDF (Schematic)](https://www.dropbox.com/scl/fi/f9w1i6sscxlyywqqm48h3/IndividualSchematic-HMI-PDF.pdf?rlkey=8xb6ayctkginnebk0vwqdsbgr&st=gkm1hwtc&dl=0)
-- [PDF (PCB)](https://www.dropbox.com/scl/fi/6415172i94j4g0n9ks7wz/egr314-pcb.pdf?rlkey=y5skzk8u1ucwclvq4b6xmhiw7&st=i34cb0tu&dl=0)
-- [ZIP Folder (Schematic)](https://www.dropbox.com/scl/fi/7beqg12lv1ck94jwv221e/Reed-Individual-Schematic-HMI.zip?rlkey=qo0x32zzfb3nxm8twjv387nnf&st=shj8wj0g&dl=0)
-- [ZIP Folder (PCB)](https://www.dropbox.com/scl/fi/0rkh08bn1l5gziiwjobsp/Reed-GerberFilesv4.zip?rlkey=7kpe3iyqmpdn1z5ggpjw43w8u&st=a3mcz4uk&dl=0)
+- [PDF (Schematic)](Direct Links/IndividualSchematic-HMI(PDF).pdf)
+- [PDF (PCB)](Direct Links/egr314-pcb.pdf)
+- [Combined ECAD Folder (Schematic + PCB)](Direct Links/JC%20Reed%20-%20HMI%20-%20ECAD%20(Schematic%20&%20PCB).zip)
 
 ### __Decision Making Process & Meeting Requirements__
 The HMI subsystem schematic/PCB integrates power regulation, user input mechanisms, visual feedback elements, and inter-subsystem communication capabilities into a cohesive, reliable design — fulfilling both the technical product requirements and user interaction goals for our middle school-targeted STEM exhibit.

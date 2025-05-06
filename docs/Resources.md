@@ -308,7 +308,7 @@ finally:
     asyncio.new_event_loop()  # Ensure loop cleanup
 
 ```
-### [ZIP File (Full ESP32 Code Project)](https://www.dropbox.com/scl/fi/55x5pb8690gg1eezanmdn/Final-HMI-Code.zip?rlkey=kodr0qi83y22pp747hb1wczsh&st=5u200o3y&dl=0)
+### [ZIP File (Full ESP32 Code Project)](Direct Links/Final%20HMI%20Code.zip)
 
 ## __CAD Modeling Used (OLED Stand + PCB Baseplate)__
 
@@ -316,4 +316,4 @@ finally:
 |----------|--------|
 |![Mounting Arm](static/images/Mounting_Arm.PNG) <br> <center>__Mounting Arm__</center> | ![OLED Mount](static/images/OLED_mount.PNG) <br> <center>__OLED Mount__</center>|
 
-### [ZIP File (CAD Files + Screenshots)](https://www.dropbox.com/scl/fi/ktyll28mq2uq1pk49krji/HMI-CAD-Files.zip?rlkey=4vba82vfc8x5x9vgf0fx8nohp&st=3zeinaun&dl=0)
+### [ZIP File (CAD Files + Screenshots)](Direct Links/HMI%20-%20CAD%20Files.zip)
